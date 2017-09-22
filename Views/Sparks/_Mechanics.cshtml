@@ -1,0 +1,56 @@
+﻿<div class="row">
+    <div class="col-sm-12"><h3>Game Mechanics <small>Mechanics for digital and traditional games</small></h3></div>
+</div>
+<div id="MechanicsData" class="row">
+    <div class="col-sm-12 data-area" data-url="Mechanics" data-size="4">
+    </div>
+    <div class="template hide">
+        <div class="hide mechanic-primary">
+            <strong>Primary mechanic:</strong> <span class="data"></span>
+        </div>
+        <div class="hide mechanic-secondary">
+            <strong>Secondary mechanic:</strong> <span class="data"></span>
+        </div>
+        <div class="hide mechanic-movement">
+            <strong>Movement:</strong> <span class="data"></span>
+        </div>
+        <div class="hide mechanic-conflict">
+            <strong>Conflict resolution:</strong> <span class="data"></span>
+        </div>
+        <div class="hide win-condition">
+            <strong>Win condition:</strong> <span class="data"></span>
+        </div>
+        <div class="hide team-setup">
+            <strong>Team setup:</strong> <span class="data"></span>
+        </div>
+        <div class="hide classic-arcade">
+            <strong>Classic arcade influence:</strong> <span class="data"></span>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var element = $('#MechanicsData .data-area');
+        element.data('display', DisplayMechanics);
+        element.data('default-count', 3);
+    });
+
+    //  Takes a VmVehicle object in JSON format as
+    //  its parameter. This object contains Game Mechanics
+    //  information. Returns the object as HTML.
+    function DisplayMechanics(item) {
+        var result = $('#MechanicsData').children('.template').clone();    
+
+        if (item.Primary) SetChildDataElement(result, '.mechanic-primary', item.Primary.Name.toLowerCase());
+        if (item.Secondary) SetChildDataElement(result, '.mechanic-secondary', item.Secondary.Name.toLowerCase());
+        if (item.Movement) SetChildDataElement(result, '.mechanic-movement', item.Movement.Name.toLowerCase());
+        if (item.Conflict) SetChildDataElement(result, '.mechanic-conflict', item.Conflict.Name.toLowerCase());
+        if (item.Win) SetChildDataElement(result, '.win-condition', item.Win.Name.toLowerCase());
+        if (item.Coop) SetChildDataElement(result, '.team-setup', item.Coop.Name.toLowerCase());
+        if (item.Arcade) SetChildDataElement(result, '.classic-arcade', item.Arcade.Name);
+
+        result.removeClass('hide');
+        result.removeClass('template');
+        return result;
+    }
+</script>

@@ -1,0 +1,332 @@
+﻿<div class="row">
+    <div class="col-sm-2">
+        <h3>Names</h3>
+    </div>
+    <div class="col-sm-5">&nbsp;<br />
+        <center>
+            <span id="NameIcon" class="glyphicon glyphicon-user text-primary"></span>&nbsp;Person/Place&nbsp;
+            <span id="EnergyIcon" class="glyphicon glyphicon-asterisk text-warning"></span>&nbsp;Energy/Material&nbsp;
+            <span id="WeaponIcon" class="glyphicon glyphicon-fire text-danger"></span>&nbsp;Weapon/Thing&nbsp;
+            <span id="SavedIcon" class="glyphicon glyphicon-ok text-success"></span>&nbsp;Item saved
+        </center>
+    </div>
+    <div class="col-sm-5 text-right">
+        <div id="NameCount" class="btn btn-primary">3</div>
+        <div id="NameLanguage" class="dropdown" style="display:inline-block" selectedLanguageID="0">
+            <button id="NameLanguageDropdown" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                Language
+                <span class="caret"></span>
+            </button>
+            <ul id="NameLanguageChoices" class="dropdown-menu text-center">
+                <li><a id="0">Jabberwocky</a></li>
+                <li><a id="1">Lang A</a></li>
+                <li><a id="2">POly B</a></li>
+            </ul>
+        </div>
+        <div id="GenName" class="btn btn-primary">Normal</div>
+        <div id="GenSong" class="btn btn-primary">Easy</div>
+        <div id="GenAlien" class="btn btn-primary">Vowel</div>
+        <div id="SaveNames" class="btn btn-danger">Save</div>
+    </div>
+</div>
+<div class="row">
+    <div id="NameData" class="col-sm-12">
+    </div>
+</div>
+<script type="text/javascript">
+
+    var NameClass = 'Name';
+    var NameDataID = NameClass + 'Data';
+    var NameCountID = NameClass + 'Count';
+    var NameCycleChoices = [3, 5, 9, 20];
+
+    var JABBER = 0;
+    var SONG = 1;
+    var ALIEN = 2;
+
+    $(document).ready(function () {
+        //  TODO
+        //  this should be moved to a global javascript file since it initializes ALL dropdowns
+        $('.dropdown-toggle').dropdown();
+
+        $('#Gen' + NameClass).on('click', function () {
+            GetNames(6, JABBER, 'Gen' + NameClass);
+        });
+        $('#GenSong').on('click', function () {
+            GetNames(6, SONG, 'GenSong');
+        });
+        $('#GenAlien').on('click', function () {
+            GetNames(6, ALIEN, 'GenAlien');
+        });
+        $('#SaveNames').on('click', function () {
+            FlagNamesAsSaved();
+        });
+
+        //  setup the count cycle button
+        $('#' + NameCountID).on('click', function () {
+            CycleNameCount();
+        })
+
+        //  get the language choices
+        RequestLanguages();
+
+        //  setup language selection options
+        $('#' + NameClass + 'LanguageChoices li a').each(function(index, element) {
+            $(element).on('click', function () {
+                $(element).parents('div').first().attr('selectedLanguageID', $(this).attr('id'));
+            });
+        });
+        //  generate the initial batch of names
+        $('#Gen' + NameClass).click();
+    });
+
+    function RequestLanguages() {
+        $.ajax({
+            method: 'get',
+            url: '@Url.Action("Languages")',
+            dataType: 'json',
+            beforeSend: function () {
+                var btn = $('#NameLanguageDropdown');
+                btn.removeClass('btn-warning');
+                btn.removeClass('btn-success');
+                btn.removeClass('btn-danger');
+                btn.addClass('btn-warning');
+            },
+            success: function (data) {
+                var btn = $('#NameLanguageDropdown');
+                btn.addClass('btn-success');
+                ReceiveLanguages(data);
+            },
+            error: function () {
+                var btn = $('#NameLanguageDropdown');
+                btn.addClass('btn-danger');
+            }
+        });
+    }
+
+    function ReceiveLanguages(data) {
+        var choices = $('#NameLanguageChoices');
+        choices.empty();
+
+        choices.append(CreateLanguageEntry(0, 'Jabberwocky'));
+
+        $.each(data, function (index, element) {
+            choices.append(CreateLanguageEntry(element.ID, element.Name));
+        });
+    }
+
+    function CreateLanguageEntry(ID, name) {
+        var entryItem = $('<li></li>');
+        var anchor = $('<a></a>');
+        anchor.attr('id', ID);
+        anchor.html(name);
+
+        anchor.on('click', function () {
+            var dropdown = $(this).parents('div').first();
+            dropdown.attr('selectedLanguageID', $(this).attr('id'));
+            var button = dropdown.find('button');
+            button.html($(this).text() + '&nbsp;');
+            var caret = $('<span></span>');
+            caret.addClass('caret')
+            button.append(caret);
+        });
+
+        entryItem.append(anchor);
+        return entryItem;
+    }
+
+    function GetNames(columns, dialect, buttonID) {
+        $.ajax({
+            method: 'get',
+            url: '@Url.Action("WordByLanguageID")',
+            data: {
+                count: $('#' + NameCountID).text() * columns,
+                languageID: parseInt($('#' + NameClass + 'Language').attr('selectedLanguageID')),
+                dialect: dialect
+            },
+            dataType: 'json',
+            beforeSend: function () {
+                ClearNameButtons();
+                var btn = $('#' + buttonID);
+                btn.addClass('btn-warning');
+            },
+            success: function (data) {
+                $('#' + buttonID).addClass('btn-success');
+                DisplayNames(data, columns);
+            },
+            error: function () {
+                $('#' + buttonID).addClass('btn-danger');
+            }
+        });
+    };
+    /*
+    function XGetNames(columns, dialect, buttonID) {
+        $.ajax({
+            method: 'get',
+            url: 'Url.Action("PokeJabberwocky")',
+            data: {
+                count: $('#' + NameCountID).text() * columns,
+                dialect: dialect
+            },
+            dataType: 'json',
+            beforeSend: function () {
+                ClearNameButtons();
+                var btn = $('#' + buttonID);
+                btn.addClass('btn-warning');
+            },
+            success: function (data) {
+                $('#' + buttonID).addClass('btn-success');
+                DisplayNames(data, columns);
+            },
+            error: function () {
+                $('#' + buttonID).addClass('btn-danger');
+            }
+        });
+    };
+    */
+    function ClearNameButtons() {
+
+        var buttonIDs = ['GenName', 'GenSong', 'GenAlien'];
+
+        buttonIDs.forEach(function (ID) {
+            var btn = $('#' + ID);
+            btn.removeClass('btn-warning');
+            btn.removeClass('btn-success');
+            btn.removeClass('btn-danger');
+        });
+    }
+
+    function DisplayNames(dataList, columns) {
+        var container = $('#' + NameDataID);
+        container.empty();
+
+        var listSize = dataList.length;
+        var currentRow = null;
+        for (var i = 0 ; i < listSize ; i++) {
+            //  create new row
+            if (i % columns == 0) {
+                //  end previous row
+                if (i > 0) {
+                    container.append(currentRow);
+                }
+                currentRow = $('<div></div>');
+                currentRow.addClass('row');
+            }
+
+            //  add the element to the current row
+            currentRow.append(GetNameDiv(dataList[i]));
+        }
+        container.append(currentRow);
+    }
+
+    function GetNameDiv(Name) {
+        var itemDiv = $("<div></div>");
+        itemDiv.addClass(NameClass);
+        itemDiv.addClass("col-sm-2");
+
+        var NameSpan = $("<span></span>");
+        NameSpan.attr('id', 'Name');
+        NameSpan.text(Name);
+
+        var iconSpan = $("<span></span>");
+        iconSpan.addClass('saveIcon');
+        iconSpan.attr('iconIndex', 0);
+
+        itemDiv.append(iconSpan);
+        itemDiv.append(NameSpan);
+        itemDiv.on('click', function () {
+            CycleNameIcons(this);
+        });
+        return itemDiv;
+    }
+
+    var NameIcons = [
+        {
+            "glyphClass": 'glyphicon-ok',
+            "colorClass": 'text-success'
+        },
+        {
+            "glyphClass": 'glyphicon-user',
+            "colorClass": 'text-primary',
+        },
+        {
+            "glyphClass": 'glyphicon-asterisk',
+            "colorClass": 'text-warning'
+        },
+        {
+            "glyphClass": 'glyphicon-fire',
+            "colorClass": 'text-danger'
+        }
+    ];
+
+    function CycleNameIcons(element) {
+        var jqElement = $(element);
+        var glyphSpan = jqElement.find('.saveIcon');
+        var glyphID = parseInt(glyphSpan.attr('iconIndex')) + 1;
+        glyphSpan.attr('iconIndex', glyphID);
+
+        //  remove all classes from the span
+        glyphSpan.attr('class', '');
+        glyphSpan.addClass('saveIcon');
+        glyphSpan.empty();
+        jqElement.find('#nbsp').remove();
+
+        //  when ID == 0, hide everything
+        //  index 0 is where the 'successfully uploaded' icon hides
+        if (glyphID == 0) return;
+
+        //  when ID == number of cycle choices, reset to 1
+        if (glyphID == NameIcons.length) {
+            glyphID = 0;
+            glyphSpan.attr('iconIndex', glyphID);
+            return;
+        }
+
+        //  at this point, glyphID should be a valid
+        //  index from 0 to NameIcons.length -1
+        SetNameIcon(glyphSpan, glyphID);
+    }
+
+    function SetNameIcon(glyphSpan, glyphID) {
+        //  get the NameIcon object matching the new ID
+        var icon = NameIcons[glyphID];
+
+        //  remove old classes
+        glyphSpan.attr('class', '');
+        glyphSpan.addClass('saveIcon');
+
+        //  set the span icon
+        glyphSpan.addClass('glyphicon');
+        glyphSpan.addClass(icon.glyphClass);
+
+        var spaceSpan = $('<span></span>');
+        spaceSpan.append('&nbsp;');
+        spaceSpan.attr('id', 'nbsp');
+        spaceSpan.insertAfter(glyphSpan);
+
+        //  set the span color
+        glyphSpan.addClass(icon.colorClass);
+        glyphSpan.show();
+    }
+
+    function FlagNamesAsSaved() {
+        var namesToSave = $('.saveIcon');
+        $.each(namesToSave, function (i, element) {
+            var glyphSpan = $(element);
+            var glyphID = parseInt(glyphSpan.attr('iconIndex'));
+            if (glyphID > 0) {
+                glyphSpan.attr('iconIndex', 0);
+                SetNameIcon(glyphSpan, 0);
+            }
+        });
+    }
+
+    function CycleNameCount() {
+        var curCount = $('#' + NameCountID).text();
+        var index = NameCycleChoices.indexOf(parseInt(curCount));
+
+        index++;
+        if (index == NameCycleChoices.length) index = 0;
+        $('#' + NameCountID).text(NameCycleChoices[index]);
+    }
+</script>

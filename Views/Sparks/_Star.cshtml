@@ -1,0 +1,14 @@
+﻿<div class="row">
+    <div class="col-sm-12"><h3>Stars <small>Real and theoretical</small></h3></div>
+</div>
+<div id="StarData" class="row">
+    <div class="col-sm-12 data-area" data-url="Star" data-size="3">
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var element = $('#StarData .data-area');
+        element.data('display', DisplayItemDescription);
+        element.data('default-count', 4);
+    });
+</script>

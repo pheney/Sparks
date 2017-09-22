@@ -1,0 +1,606 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F67CFB56-7993-48A1-9DD6-881314FECD17}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sparks</RootNamespace>
+    <AssemblyName>Sparks</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.1\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.1\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Owin, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.3\lib\net45\System.Web.Http.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
+    <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
+    <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
+    <Compile Include="Areas\HelpPage\HelpPageAreaRegistration.cs" />
+    <Compile Include="Areas\HelpPage\HelpPageConfigurationExtensions.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\CollectionModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ComplexTypeModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\DictionaryModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\EnumTypeModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\EnumValueDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\IModelDocumentationProvider.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\KeyValuePairModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelDescriptionGenerator.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelNameAttribute.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelNameHelper.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ParameterAnnotation.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ParameterDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\SimpleTypeModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\Models\HelpPageApiModel.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\HelpPageSampleGenerator.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\HelpPageSampleKey.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\ImageSample.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\InvalidSample.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\ObjectGenerator.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
+    <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DatabaseController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MeController.cs" />
+    <Compile Include="Controllers\SparksController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\DataModel\BaseModel.cs" />
+    <Compile Include="Models\DataModel\ActorUniformity.cs" />
+    <Compile Include="Models\DataModel\ActorMutation.cs" />
+    <Compile Include="Models\DataModel\ActorDistribution.cs" />
+    <Compile Include="Models\DataModel\ActorComposition.cs" />
+    <Compile Include="Models\DataModel\ActorCollective.cs" />
+    <Compile Include="Models\DataModel\AnimalAmphibian.cs" />
+    <Compile Include="Models\DataModel\AnimalBear.cs" />
+    <Compile Include="Models\DataModel\AnimalBirdOfPrey.cs" />
+    <Compile Include="Models\DataModel\Business.cs" />
+    <Compile Include="Models\DataModel\DataEngineer.cs" />
+    <Compile Include="Models\DataModel\DataScienceMedical.cs" />
+    <Compile Include="Models\DataModel\DataScience.cs" />
+    <Compile Include="Models\DataModel\ProfessionType.cs" />
+    <Compile Include="Models\DataModel\Sport.cs" />
+    <Compile Include="Models\DataModel\SportType.cs" />
+    <Compile Include="Models\DataModel\BusinessType.cs" />
+    <Compile Include="Models\DataModel\AnimalCat.cs" />
+    <Compile Include="Models\DataModel\AnimalDiet.cs" />
+    <Compile Include="Models\DataModel\AnimalDinosaur.cs" />
+    <Compile Include="Models\DataModel\AnimalDog.cs" />
+    <Compile Include="Models\DataModel\AnimalInsect.cs" />
+    <Compile Include="Models\DataModel\AnimalInvertebrate.cs" />
+    <Compile Include="Models\DataModel\AnimalLizard.cs" />
+    <Compile Include="Models\DataModel\AnimalMammal.cs" />
+    <Compile Include="Models\DataModel\AnimalMythical.cs" />
+    <Compile Include="Models\DataModel\AnimalShark.cs" />
+    <Compile Include="Models\DataModel\AnimalSnake.cs" />
+    <Compile Include="Models\DataModel\AnimalTurtle.cs" />
+    <Compile Include="Models\DataModel\AnimalType.cs" />
+    <Compile Include="Models\DataModel\AnimalUndead.cs" />
+    <Compile Include="Models\DataModel\ActorAbilities.cs" />
+    <Compile Include="Models\DataModel\CharacterActivity.cs" />
+    <Compile Include="Models\DataModel\CharacterAge.cs" />
+    <Compile Include="Models\DataModel\CharacterAppearance.cs" />
+    <Compile Include="Models\DataModel\CharacterCombatRole.cs" />
+    <Compile Include="Models\DataModel\CharacterExperience.cs" />
+    <Compile Include="Models\DataModel\CharacterPersonality.cs" />
+    <Compile Include="Models\DataModel\CharacterTitleType.cs" />
+    <Compile Include="Models\DataModel\DataGeneralRange.cs" />
+    <Compile Include="Models\DataModel\DataGeneralQuantity.cs" />
+    <Compile Include="Models\DataModel\DataGeneralSize.cs" />
+    <Compile Include="Models\DataModel\DataColor.cs" />
+    <Compile Include="Models\DataModel\GameCommitment.cs" />
+    <Compile Include="Models\DataModel\GameControl.cs" />
+    <Compile Include="Models\DataModel\GameExtension.cs" />
+    <Compile Include="Models\DataModel\GameDesignTheme.cs" />
+    <Compile Include="Models\DataModel\GameGameplay.cs" />
+    <Compile Include="Models\DataModel\GameComponent.cs" />
+    <Compile Include="Models\DataModel\GameGenre.cs" />
+    <Compile Include="Models\DataModel\GameLiteraryGenre.cs" />
+    <Compile Include="Models\DataModel\GameMechanicsArcade.cs" />
+    <Compile Include="Models\DataModel\GameMechanicsContest.cs" />
+    <Compile Include="Models\DataModel\GameMechanicsCooperation.cs" />
+    <Compile Include="Models\DataModel\GameMechanicsMovement.cs" />
+    <Compile Include="Models\DataModel\GameMechanicsObstacle.cs" />
+    <Compile Include="Models\DataModel\GameMechanicsPrimary.cs" />
+    <Compile Include="Models\DataModel\GameMechanicsWinCondition.cs" />
+    <Compile Include="Models\DataModel\GameMood.cs" />
+    <Compile Include="Models\DataModel\GameSystem.cs" />
+    <Compile Include="Models\DataModel\GameTargetMarket.cs" />
+    <Compile Include="Models\DataModel\ItemMagic.cs" />
+    <Compile Include="Models\DataModel\ItemTool.cs" />
+    <Compile Include="Models\DataModel\ItemMiscellaneous.cs" />
+    <Compile Include="Models\DataModel\MovementAirshipType.cs" />
+    <Compile Include="Models\DataModel\MovementFlightType.cs" />
+    <Compile Include="Models\DataModel\MovementMultiSystemType.cs" />
+    <Compile Include="Models\DataModel\MovementSailType.cs" />
+    <Compile Include="Models\DataModel\MovementSpaceType.cs" />
+    <Compile Include="Models\DataModel\MovementWaterType.cs" />
+    <Compile Include="Models\DataModel\PowerSystemContainer.cs" />
+    <Compile Include="Models\DataModel\PowerSystemEnergy.cs" />
+    <Compile Include="Models\DataModel\ProfessionMisc.cs" />
+    <Compile Include="Models\DataModel\ProfessionTechnologist.cs" />
+    <Compile Include="Models\DataModel\ProfessionTechnologyField.cs" />
+    <Compile Include="Models\DataModel\RoleFacilityStaff.cs" />
+    <Compile Include="Models\DataModel\RoleNauticalCrew.cs" />
+    <Compile Include="Models\DataModel\RoleProductionCrew.cs" />
+    <Compile Include="Models\DataModel\SensorBands.cs" />
+    <Compile Include="Models\DataModel\SettingCitySize.cs" />
+    <Compile Include="Models\DataModel\SettingLocation.cs" />
+    <Compile Include="Models\DataModel\SocietyCivilDefenseInfrastructure.cs" />
+    <Compile Include="Models\DataModel\SocietyCulturalInfrastructure.cs" />
+    <Compile Include="Models\DataModel\SocietyEconomicInfrastructure.cs" />
+    <Compile Include="Models\DataModel\SocietyEducationInfrastructure.cs" />
+    <Compile Include="Models\DataModel\SocietyEmergencyServicesInfrastructure.cs" />
+    <Compile Include="Models\DataModel\SocietyHealthCareInfrastructure.cs" />
+    <Compile Include="Models\DataModel\SocietyIndustrialInfrastructure.cs" />
+    <Compile Include="Models\DataModel\SocietyLawEnforcementInfrastructure.cs" />
+    <Compile Include="Models\DataModel\SocietyGovernment.cs" />
+    <Compile Include="Models\DataModel\SocietySocialInfrastructure.cs" />
+    <Compile Include="Models\DataModel\SocietyType.cs" />
+    <Compile Include="Models\DataModel\SparksDbContext.cs" />
+    <Compile Include="Models\DataModel\Species.cs" />
+    <Compile Include="Models\DataModel\SpeciesTemplate.cs" />
+    <Compile Include="Models\DataModel\TitlePolitical.cs" />
+    <Compile Include="Models\DataModel\TitleHeroic.cs" />
+    <Compile Include="Models\DataModel\TitleMagic.cs" />
+    <Compile Include="Models\DataModel\TitleMelee.cs" />
+    <Compile Include="Models\DataModel\TitleSavage.cs" />
+    <Compile Include="Models\DataModel\TitleShooter.cs" />
+    <Compile Include="Models\DataModel\Vehicle.cs" />
+    <Compile Include="Models\DataModel\VehicleArmor.cs" />
+    <Compile Include="Models\DataModel\VehicleCargoCapacity.cs" />
+    <Compile Include="Models\DataModel\VehicleCharacteristic.cs" />
+    <Compile Include="Models\DataModel\VehicleCondition.cs" />
+    <Compile Include="Models\DataModel\VehicleDefenses.cs" />
+    <Compile Include="Models\DataModel\VehicleMaterial.cs" />
+    <Compile Include="Models\DataModel\VehicleMovement.cs" />
+    <Compile Include="Models\DataModel\VehicleOffenses.cs" />
+    <Compile Include="Models\DataModel\VehicleSize.cs" />
+    <Compile Include="Models\DataModel\VehiclePower.cs" />
+    <Compile Include="Models\DataModel\VehiclePurpose.cs" />
+    <Compile Include="Models\DataModel\VehicleRange.cs" />
+    <Compile Include="Models\DataModel\VehicleSpeed.cs" />
+    <Compile Include="Models\DataModel\VehicleMilitary.cs" />
+    <Compile Include="Models\DataModel\VehicleWarship.cs" />
+    <Compile Include="Models\DataModel\VehicleTechnology.cs" />
+    <Compile Include="Models\DataModel\WeaponClass.cs" />
+    <Compile Include="Models\DataModel\WeaponMagic.cs" />
+    <Compile Include="Models\DataModel\WeaponCapital.cs" />
+    <Compile Include="Models\DataModel\WeaponMelee.cs" />
+    <Compile Include="Models\DataModel\WeaponModAesthetic.cs" />
+    <Compile Include="Models\DataModel\WeaponModernRanged.cs" />
+    <Compile Include="Models\DataModel\WeaponModMagicAugment.cs" />
+    <Compile Include="Models\DataModel\WeaponModMagicEnergy.cs" />
+    <Compile Include="Models\DataModel\WeaponModNonEnergy.cs" />
+    <Compile Include="Models\DataModel\WeaponModTechEnergy.cs" />
+    <Compile Include="Models\DataModel\WeaponModType.cs" />
+    <Compile Include="Models\DataModel\WeaponPrimativeRanged.cs" />
+    <Compile Include="Models\DataModel\WeaponSiege.cs" />
+    <Compile Include="Models\DataModel\WeaponSize.cs" />
+    <Compile Include="Models\DataModel\WeaponType.cs" />
+    <Compile Include="Models\DataModel\WorldClimate.cs" />
+    <Compile Include="Models\DataModel\WorldCommonEnergy.cs" />
+    <Compile Include="Models\DataModel\WorldEcosystem.cs" />
+    <Compile Include="Models\DataModel\WorldEkistic.cs" />
+    <Compile Include="Models\DataModel\WorldEpoch.cs" />
+    <Compile Include="Models\DataModel\WorldLandMass.cs" />
+    <Compile Include="Models\DataModel\WorldMacroCulture.cs" />
+    <Compile Include="Models\DataModel\WorldPlanet.cs" />
+    <Compile Include="Models\DataModel\WorldSettingAdjective.cs" />
+    <Compile Include="Models\DataModel\WorldSettingScale.cs" />
+    <Compile Include="Models\DataModel\WorldSociety.cs" />
+    <Compile Include="Models\DataModel\WorldStar.cs" />
+    <Compile Include="Models\DataModel\WorldTechnology.cs" />
+    <Compile Include="Models\DataModel\WorldWaterBody.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MeViewModels.cs" />
+    <Compile Include="Models\ViewModel\VmDefenseGame.cs" />
+    <Compile Include="Models\ViewModel\VmIdeaTraditional.cs" />
+    <Compile Include="Models\ViewModel\VmTheme.cs" />
+    <Compile Include="Models\ViewModel\VmWargame.cs" />
+    <Compile Include="Models\ViewModel\VmCharacter.cs" />
+    <Compile Include="Models\ViewModel\VmSpecies.cs" />
+    <Compile Include="Models\ViewModel\VmGeneral.cs" />
+    <Compile Include="Models\ViewModel\VmMechanics.cs" />
+    <Compile Include="Models\ViewModel\VmTitle.cs" />
+    <Compile Include="Models\ViewModel\VmVehicle.cs" />
+    <Compile Include="Models\ViewModel\VmWeapon.cs" />
+    <Compile Include="Models\ViewModel\VmSociety.cs" />
+    <Compile Include="Models\ViewModel\VmWorld.cs" />
+    <Compile Include="Models\WorkModel\Business.cs" />
+    <Compile Include="Models\WorkModel\DbExtra.cs" />
+    <Compile Include="Models\WorkModel\Player.cs" />
+    <Compile Include="Models\WorkModel\Species.cs" />
+    <Compile Include="Models\WorkModel\Game.cs" />
+    <Compile Include="Models\WorkModel\LoremIpsum.cs" />
+    <Compile Include="Models\WorkModel\Polyglot.cs" />
+    <Compile Include="Models\WorkModel\Jabberwock.cs" />
+    <Compile Include="Models\WorkModel\Location.cs" />
+    <Compile Include="Models\WorkModel\Sport.cs" />
+    <Compile Include="Models\WorkModel\Theme.cs" />
+    <Compile Include="Models\WorkModel\Mechanics.cs" />
+    <Compile Include="Models\WorkModel\Utilities.cs" />
+    <Compile Include="Models\WorkModel\Title.cs" />
+    <Compile Include="Models\WorkModel\Vehicle.cs" />
+    <Compile Include="Models\WorkModel\Weapon.cs" />
+    <Compile Include="Models\WorkModel\Society.cs" />
+    <Compile Include="Models\WorkModel\Character.cs" />
+    <Compile Include="Models\WorkModel\World.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\ApplicationOAuthProvider.cs" />
+    <Compile Include="Results\ChallengeResult.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\Sparks.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\bootstrap-select.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Areas\HelpPage\Views\Web.config" />
+    <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\ResourceModel.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\Index.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\TextSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\SimpleTypeModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Samples.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Parameters.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ModelDescriptionLink.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\KeyValuePairModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\InvalidSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ImageSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\EnumTypeModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\DictionaryModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ComplexTypeModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\knockout-2.3.0.debug.js" />
+    <Content Include="Scripts\knockout-2.3.0.js" />
+    <Content Include="Scripts\knockout.validation.debug.js" />
+    <Content Include="Scripts\knockout.validation.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\sammy-0.7.4.js" />
+    <Content Include="Scripts\sammy-0.7.4.min.js" />
+    <Content Include="Scripts\Sparks\General.js" />
+    <Content Include="Scripts\Sparks\Original.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Scripts\app\_run.js" />
+    <Content Include="Scripts\app\app.datamodel.js" />
+    <Content Include="Scripts\app\app.viewmodel.js" />
+    <Content Include="Scripts\app\common.js" />
+    <Content Include="Scripts\app\home.viewmodel.js" />
+    <Content Include="Views\Originals\XIndex.cshtml" />
+    <Content Include="Views\Database\Index.cshtml" />
+    <None Include="Views\Sparks\prototypePage.cshtml" />
+    <Content Include="Views\Originals\_Weapon.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\SendCode.cshtml" />
+    <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Home\_Home.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
+    <Content Include="Views\Manage\ChangePassword.cshtml" />
+    <Content Include="Views\Manage\Index.cshtml" />
+    <Content Include="Views\Manage\ManageLogins.cshtml" />
+    <Content Include="Views\Manage\SetPassword.cshtml" />
+    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Sparks\Index.cshtml" />
+    <Content Include="Views\Originals\_World.cshtml" />
+    <Content Include="Views\Sparks\_Species.cshtml" />
+    <Content Include="Views\Originals\_Title.cshtml" />
+    <Content Include="Views\Originals\_Vehicle.cshtml" />
+    <Content Include="Views\Originals\_Society.cshtml" />
+    <Content Include="Views\Originals\_Mechanics.cshtml" />
+    <Content Include="Views\Originals\_Theme.cshtml" />
+    <Content Include="Views\Originals\_Name.cshtml" />
+    <Content Include="Views\Originals\_Character.cshtml" />
+    <Content Include="Views\Originals\_Location.cshtml" />
+    <Content Include="Views\Originals\_CharacterOrg.cshtml" />
+    <Content Include="Views\Originals\_CharacterSub.cshtml" />
+    <Content Include="Views\Originals\_Game.cshtml" />
+    <Content Include="Views\Originals\_WargameSub.cshtml" />
+    <Content Include="Views\Originals\_DefenseGameSub.cshtml" />
+    <Content Include="Views\Originals\_SimpleIdeaSub.cshtml" />
+    <Content Include="Views\Originals\_GameIdea.cshtml" />
+    <Content Include="Views\Originals\_SectionControlPanel.cshtml" />
+    <Content Include="Views\Originals\_Species.cshtml" />
+    <Content Include="Views\Sparks\_Vehicle.cshtml" />
+    <Content Include="Views\Sparks\_VehicleByPurpose.cshtml" />
+    <Content Include="Views\Sparks\_VehicleByMovement.cshtml" />
+    <Content Include="Views\Sparks\_VehicleWarship.cshtml" />
+    <Content Include="Views\Sparks\_VehicleTactical.cshtml" />
+    <Content Include="Views\Sparks\_World.cshtml" />
+    <Content Include="Views\Sparks\_Anything.cshtml" />
+    <Content Include="Views\Sparks\_Traditional.cshtml" />
+    <Content Include="Views\Sparks\_Digital.cshtml" />
+    <Content Include="Views\Sparks\_Character.cshtml" />
+    <Content Include="Views\Sparks\_Name.cshtml" />
+    <Content Include="Views\Sparks\_Title.cshtml" />
+    <Content Include="Views\Sparks\_Tool.cshtml" />
+    <Content Include="Views\Sparks\_Weapon.cshtml" />
+    <Content Include="Views\Sparks\_Star.cshtml" />
+    <Content Include="Views\Sparks\_Landmass.cshtml" />
+    <Content Include="Views\Sparks\_Mechanics.cshtml" />
+    <Content Include="Views\Sparks\_Waterbody.cshtml" />
+    <Content Include="Views\Sparks\_Theme.cshtml" />
+    <Content Include="Views\Sparks\_Location.cshtml" />
+    <Content Include="Views\Sparks\_Planet.cshtml" />
+    <Content Include="Views\Sparks\_Everything.cshtml" />
+    <Content Include="Views\Sparks\_Ecology.cshtml" />
+    <Content Include="Views\Sparks\_Genre.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Models\FormModel\" />
+    <Folder Include="Models\JabberModel\" />
+    <Folder Include="Views\Samples\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>49549</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:49549/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

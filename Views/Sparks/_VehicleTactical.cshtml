@@ -1,0 +1,55 @@
+﻿<div class="row">
+    <div class="col-sm-12"><h3>Vehicles <small>Tactical combat, e.g., tanks, fighters</small></h3></div>
+</div>
+<div id="CombatVehicleData" class="row">
+    <div class="col-sm-12 data-area" data-url="VehicleTactical" data-size="4">
+    </div>
+    <div class="template hide">
+        <strong class="vehicle-name"></strong>
+        <div class="hide vehicle-movement">
+            <strong>Movement:</strong> <span class="data"></span>
+        </div>
+        <div class="hide vehicle-offenses">
+            <strong>Offenses:</strong> <span class="data"></span>
+        </div>
+        <div class="hide vehicle-defenses">
+            <strong>Defenses:</strong> <span class="data"></span>
+        </div>
+        <div class="hide vehicle-armor">
+            <strong>Armor:</strong> <span class="data"></span>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var element = $('#CombatVehicleData .data-area');
+        element.data('display', CombatVehicleDisplay);
+        element.data('parameters', CombatVehicleParameters);
+        element.data('default-count', 3);
+    });
+
+    //  Takes a VmVehicle object in JSON format as
+    //  its parameter. This object contains Combat Vehicle (tank, fighter)
+    //  information. Returns the object as HTML.
+    function CombatVehicleDisplay(item) {
+        var result = $('#CombatVehicleData').children('.template').clone();
+        var vehicleName = "";
+        if (item.Condition) vehicleName = item.Condition.Name + ' ';
+        vehicleName += item.BaseVehicle.Name;
+        result.find('.vehicle-name').html(vehicleName.substring(0,1).toUpperCase() + vehicleName.substring(1));
+        if (item.Movement) SetChildDataElement(result, '.vehicle-movement', item.Movement.Name);
+        if (item.Offenses) SetChildDataElement(result, '.vehicle-offenses', item.Offenses.Name);
+        if (item.Defenses) SetChildDataElement(result, '.vehicle-defenses', item.Defenses.Name);
+        if (item.Armor) SetChildDataElement(result, '.vehicle-armor', item.Armor.Name);
+        result.removeClass('hide');
+        result.removeClass('template');
+        return result;
+    }
+
+    function CombatVehicleParameters() {
+        return {
+            count: GetCount(),
+            attrCount: 2
+        };
+    }
+</script>

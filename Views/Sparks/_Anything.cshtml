@@ -1,0 +1,25 @@
+﻿<div class="row">
+    <div class="col-sm-12"><h3>Anything <small>Random selection from all available data</small></h3></div>
+</div>
+<div id="AnythingData" class="row">
+    <div class="col-sm-12 data-area" data-url="" data-size="11">
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var element = $('#AnythingData .data-area');
+        element.data('display', DisplayAnything);
+        element.data('default-count', 1);
+    });
+
+    //  Takes a VmGeneral object in JSON format as
+    //  its parameter. This object contains 
+    //  information representing one of everything.
+    //  Returns the object as HTML.
+    function DisplayAnything(item) {
+        var result = $('<div>to do</div>');
+
+
+        return result;
+    }
+</script>

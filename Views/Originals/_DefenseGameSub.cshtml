@@ -1,0 +1,26 @@
+﻿@model Sparks.Models.ViewModel.VmDefenseGame
+<div class="row">
+    <div class="col-sm-10"><h4>@Model.Name</h4>
+        <div>Turret Defense</div>
+        <div><em>@Model.Theme</em></div>
+    </div>
+</div>
+<p />
+<div class="row">
+    <div class="col-sm-12">
+        <div>@Model.Attackers.Desc are attacking @Model.Defenders.Desc in @Model.Location.Name</div>
+        <div>The game is played on a @Model.Board board.</div>
+        <p />
+        <div><strong>Turrets</strong></div>
+        @foreach (var item in Model.Towers)
+        {
+            <div>@item</div>
+        }
+        <p />
+        <div><strong>Creeps</strong></div>
+        @foreach (var item in Model.Creeps)
+        {
+            <div>@item</div>
+        }
+    </div>
+</div>

@@ -1,0 +1,18 @@
+﻿<div class="row">
+    <div class="col-sm-12"><h3>Worlds <small>Planet, star, landmass, waterbody, climate, ecology</small></h3></div>
+</div>
+<div id="WorldData" class="row">
+    <div class="col-sm-12 data-area" data-url="World" data-size="4">
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var element = $('#WorldData .data-area');
+        element.data('display', DisplayWorld);
+        element.data('default-count', 3);
+    });
+
+    function DisplayWorld(item) {
+        return CustomCase(item.Description);
+    }
+</script>

@@ -1,0 +1,126 @@
+﻿<div class="row">
+    <div class="col-sm-5"><h3>Weapons <small>Magic, high-tech and archaic personal weapons</small></h3></div>
+    <div class="col-sm-7">
+        <div id="technologyAny" class="btn btn-primary btn-xs">Any</div>
+        <span>|</span>
+        <div class="btn btn-primary btn-xs btn-technology-toggle" data-type-id="0">Magic</div>
+        <div class="btn btn-primary btn-xs btn-technology-toggle" data-type-id="1">Technology</div>
+        <div class="btn btn-primary btn-xs btn-technology-toggle" data-type-id="2">Non-energy</div>
+        <div class="btn btn-primary btn-xs btn-technology-toggle" data-type-id="4">Aesthetic</div>
+        <br />
+        <div id="weaponAny" class="btn btn-primary btn-xs">Any</div>
+        <span>|</span>
+        <div class="btn btn-primary btn-xs btn-weapon-toggle" data-type-id="0">Melee</div>
+        <div class="btn btn-primary btn-xs btn-weapon-toggle" data-type-id="1">Primitive Ranged</div>
+        <div class="btn btn-primary btn-xs btn-weapon-toggle" data-type-id="2">Modern Ranged</div>
+        <div class="btn btn-primary btn-xs btn-weapon-toggle" data-type-id="3">Magic</div>
+        <div class="btn btn-primary btn-xs btn-weapon-toggle" data-type-id="4">Siege</div>
+    </div>
+</div>
+<div id="WeaponData" class="row">
+    <div class="col-sm-12 data-area" data-url="Weapon" data-size="3">
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var element = $('#WeaponData .data-area');
+        element.data('parameters', WeaponParameters);
+        //element.data('display', DisplayWeapon);
+        element.data('default-count', 4);
+
+        $('#technologyAny').on('click', function () {
+            var thisButton = $(this);
+            var techButtons = $('.btn-technology-toggle');
+            LockButtonDown(techButtons, false);
+            LockButtonDown(thisButton, true);
+        });
+
+        $('#weaponAny').on('click', function () {
+            var thisButton = $(this);
+            var weaponButtons = $('.btn-weapon-toggle');
+            LockButtonDown(weaponButtons, false);
+            LockButtonDown(thisButton, true);
+        });
+
+        $('.btn-technology-toggle').on('click', function () {
+            var anyButton = $('#technologyAny');
+            var button = $(this);
+            var isPushed = button.hasClass('active');
+            if (isPushed) {
+                LockButtonDown(button, false);
+                var totalPushed = $('.btn-technology-toggle.active').length;
+                if (totalPushed == 0) {
+                    LockButtonDown(anyButton, true);
+                }
+            } else {
+                LockButtonDown(button, true);
+                LockButtonDown(anyButton, false);
+            }
+        });
+
+        $('.btn-weapon-toggle').on('click', function () {
+            var anyButton = $('#weaponAny');
+            var button = $(this);
+            var isPushed = button.hasClass('active');
+            if (isPushed) {
+                LockButtonDown(button, false);
+                var totalPushed = $('.btn-weapon-toggle.active').length;
+                if (totalPushed == 0) {
+                    LockButtonDown(anyButton, true);
+                }
+            } else {
+                LockButtonDown(button, true);
+                LockButtonDown(anyButton, false);
+            }
+        });
+
+        $('#weaponAny').click();
+        $('#technologyAny').click();
+    });
+
+    function WeaponParameters() {
+        return {
+            count: GetCount(),
+            types: GetWeaponTypes(),
+            mods: GetModificationTypes()
+        };
+    }
+
+    function GetWeaponTypes() {
+        var result = [];
+        var useAll = $('#weaponAny').hasClass('active');
+        if (useAll) return JSON.stringify(null);
+
+        $('.btn-weapon-toggle').each(function (index, element) {
+            var jqElement = $(element);
+            var isPushed = jqElement.hasClass('active');
+            if (isPushed) {
+                result.push(jqElement.data('type-id'));
+            }
+        });
+        return JSON.stringify(result);
+    }
+
+    function GetModificationTypes() {
+        var result = [];
+        var useAll = $('#technologyAny').hasClass('active');
+        $('.btn-technology-toggle').each(function (index, element) {
+            var jqElement = $(element);
+            var isPushed = jqElement.hasClass('active');
+            if (isPushed || useAll) {
+                result.push(jqElement.data('type-id'));
+            }
+        });
+        return JSON.stringify(result);
+    }
+
+    //  NOT USED
+    //  Takes a VmWeapon object in JSON format as
+    //  its parameter. This object contains weapon
+    //  information. Returns the object as HTML.
+    function DisplayWeapon(item) {
+        var result = ProperCase(item.Name);
+        if (item.WeaponType.Name == "Magic") result += ' (magic)';
+        return result;
+    }
+</script>

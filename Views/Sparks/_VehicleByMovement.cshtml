@@ -1,0 +1,80 @@
+﻿<div class="row">
+    <div class="col-sm-4"><h3>Vehicles <small>Defined by how they move</small></h3></div>
+    <div class="col-sm-8">
+        <br />
+        <div id="movementZoneAny" class="btn btn-primary btn-xs">Any</div>
+        <span>|</span>
+        <div id="movementZoneLand" class="btn btn-primary btn-xs btn-movement-zone-toggle" data-zone-id="0">Land</div>
+        <div id="movementZoneWater" class="btn btn-primary btn-xs btn-movement-zone-toggle" data-zone-id="1">Sea</div>
+        <div id="movementZoneAir" class="btn btn-primary btn-xs btn-movement-zone-toggle" data-zone-id="2">Air</div>
+        <div id="movementZoneSpace" class="btn btn-primary btn-xs btn-movement-zone-toggle" data-zone-id="3">Space</div>        
+    </div>
+</div>
+<div id="VehicleMovementData" class="row">
+    <div class="col-sm-12 data-area" data-url="VehicleByMovement" data-size="3">
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var element = $('#VehicleMovementData .data-area');
+        element.data('parameters', VehicleMovementParameters);
+        element.data('display', VehicleMovementDisplay);
+        element.data('default-count', 4);
+
+        $('#movementZoneAny').on('click', function () {
+            var thisButton=$(this);
+            var zoneButtons = $('.btn-movement-zone-toggle');
+            LockButtonDown(zoneButtons,false);
+            LockButtonDown(thisButton,true);
+        });
+
+        $('.btn-movement-zone-toggle').on('click', function () {
+            var anyButton = $('#movementZoneAny');
+            var button = $(this);
+            var isPushed = button.hasClass('active');
+            if (isPushed) {
+                LockButtonDown(button, false);
+                var totalPushed = $('.btn-movement-zone-toggle.active').length;
+                if (totalPushed == 0) {
+                    LockButtonDown(anyButton, true);
+                }
+            } else {
+                LockButtonDown(button, true);
+                LockButtonDown(anyButton, false);
+            }
+        });
+
+        $('#movementZoneAny').click();
+    });
+
+    function VehicleMovementParameters() {
+        return {
+            count: GetCount(),
+            zones: GetMovementZones()
+        };
+    }
+
+    function GetMovementZones() {
+        var result = [];
+        var useAll = $('#movementZoneAny').hasClass('active');
+        $('.btn-movement-zone-toggle').each(function (index, element) {
+            var jqElement = $(element);
+            var isPushed = jqElement.hasClass('active');
+            if (isPushed || useAll) {
+                result.push(jqElement.data('zone-id'));
+            }
+        });
+        return JSON.stringify(result);
+    }
+
+    //  Takes a VmGeneral object in JSON format as
+    //  its parameter. This object contains Vehicle
+    //  information. Returns the object as HTML.
+    function VehicleMovementDisplay(item) {
+        var result = "";
+        if (item.Condition) result = item.Condition.Name + ' ';
+        result += item.Movement.Name + ' ' + item.BaseVehicle.Name;
+        if (item.Characteristic) result += ' (' + item.Characteristic.Name + ')';
+        return ProperCase(result);
+    }
+</script>

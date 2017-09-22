@@ -1,0 +1,15 @@
+﻿<div class="row">
+    <div class="col-sm-12"><h3>Everything <small>One of everything</small></h3></div>
+</div>
+<div id="EverythingData" class="row">
+    <div class="col-sm-12 data-area" data-url="" data-size="9">
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var element = $('#EverythingData .data-area');
+        //  We can resuse the 'display anything' function
+        element.data('display', DisplayAnything);
+        element.data('default-count', 1);
+    });
+</script>

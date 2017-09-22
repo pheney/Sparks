@@ -1,0 +1,123 @@
+﻿<div class="row">
+    <div class="col-sm-8"><h3 style="display:inline-block">Games</h3>&nbsp;<a id="HideGameIcon" class="glyphicon"></a>&nbsp;<span id="GameQuantity"></span></div>
+    <div class="col-sm-4 text-right">
+        <div id="GenWargame" class="btn btn-primary" onclick="GetWargame()">Wargame</div>
+        <div id="GenDefenseGame" class="btn btn-primary" onclick="GetDefenseGame()">Turret Defense</div>
+        <div id="GenSimpleIdeaGame" class="btn btn-primary" onclick="GetSimpleIdea()">Setting + Theme</div>
+    </div>
+</div>
+<div id="GameData"></div>
+<script type="text/javascript">
+
+    var DefenseGameClass = 'DefenseGame';
+    var WargameClass = 'Wargame';
+    var SimpleIdeaClass = 'SimpleIdea';
+    var HideGameIcon = 'HideGameIcon';
+    var expandGameIcon = 'glyphicon-plus-sign';
+    var collapseGameIcon = 'glyphicon-minus-sign'
+    var GameData = 'GameData';
+
+    $(document).ready(function () {
+        var icon = $('#' + HideGameIcon);
+        var data = $('#' + GameData);
+        icon.addClass(collapseGameIcon);
+        icon.css('text-decoration', 'none');
+
+        icon.on('click', function () {
+            if (icon.hasClass(expandGameIcon)) {
+                //  expand
+                icon.removeClass(expandGameIcon);
+                icon.addClass(collapseGameIcon);
+                data.show();
+            } else {
+                //  collapse
+                icon.removeClass(collapseGameIcon);
+                icon.addClass(expandGameIcon);
+                data.hide();
+            }
+        });
+
+        $('#Gen' + WargameClass).click();
+    });
+
+    function GetWargame() {
+        GetGame(WargameClass);
+    }
+
+    function GetDefenseGame() {
+        GetGame(DefenseGameClass);
+    }
+
+    function GetSimpleIdea() {
+        GetGame(SimpleIdeaClass);
+    }
+
+    function GetGame(gameClass) {
+        $.ajax({
+            method: 'get',
+            url: '@Url.Action("Game")',
+            data: {
+                gameType: gameClass
+            },
+            dataType: 'html',
+            success: RenderGame
+        });
+    }
+    
+    function RenderGame (data) {
+
+        //  create the container that holds the game's partial-view
+        var div = $('<div></div>');
+        div.addClass('panel');
+        var dataArea = $('#' + GameData);
+        var divID = 'Delete' + GameData + dataArea.children().length;
+        div.css('padding', '15px');
+        div.css('border-radius', '15px');
+        div.css('box-shadow', '0 0 1pt 0pt #b0b0b0');
+        div.attr('id', divID);
+
+        //  create the self-delete button
+        var delButton = $('<div></div>');
+        delButton.addClass('btn btn-danger text-right');
+        delButton.html('Delete');
+        delButton.on('click', function () {
+            $('#' + divID).remove();
+            UpdateGameQuantity();
+        });
+
+        //  create the container for the self-delete button
+        var buttonCol = $('<div></div>');
+        buttonCol.addClass('col-sm-2 text-right');
+        //  put the button in the container
+        buttonCol.html(delButton);
+        
+        //  render the game data into the panel
+        div.html(data);
+
+        //  add the delete-button-container to the game data
+        div.find('.col-sm-10').first().after(buttonCol);
+
+        //  add the game panel to the top of the data area
+        dataArea.prepend(div);
+
+        if (dataArea.children().size() % 2 == 0) {
+            //  evens
+            div.css('background-color', '#f0f0f0');
+        } else {
+            //  odds
+            div.css('background-color', '#ffffff');
+        }
+
+        UpdateGameQuantity();
+    }
+
+    function UpdateGameQuantity() {
+        var dataArea = $('#' + GameData);
+        var count = dataArea.children().length;
+        if (count > 0) {
+            $('#GameQuantity').text(count);
+        } else {
+            $('#GameQuantity').text('');
+        }
+    }
+</script>

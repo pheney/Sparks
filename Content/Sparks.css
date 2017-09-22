@@ -1,0 +1,75 @@
+﻿.text-giant {
+    font-size:300%;
+}
+
+.text-large {
+    font-size:150%;
+}
+
+.btn-section {
+    margin-bottom: 2px;
+    margin-top: 2px;
+}
+
+.btn-language-toggle {
+    margin-top: 15px;
+}
+
+.btn-technology-toggle {
+    margin-bottom: 5px;
+}
+
+.keep-css {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+}
+
+.letter {    
+    font-weight: 900;
+    animation-name: loadingLetter;
+    animation-duration: 0.66s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-direction:reverse;
+}
+
+.l-1 {
+    animation-delay: 0.06s;
+}
+.l-2 {
+    animation-delay: 0.12s;
+}
+.l-3 {
+    animation-delay: 0.18s;
+}
+.l-4 {
+    animation-delay: 0.24s;
+}
+.l-5 {
+    animation-delay: 0.30s;
+}
+.l-6 {
+    animation-delay: 0.36s;
+}
+.l-7 {
+    animation-delay: 0.42s;
+}
+.l-8 {
+    animation-delay: 0.48s;
+}
+.l-9 {
+    animation-delay: 0.54s;
+}
+.l-10 {
+    animation-delay: 0.60s;
+}
+
+@keyframes loadingLetter {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

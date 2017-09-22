@@ -1,0 +1,80 @@
+﻿@model Sparks.Models.ViewModel.VmCharacter
+<div class="row">
+    <div class="col-sm-11"><h3>Character Profile</h3></div>
+    <div class="col-sm-1">
+        <div id="GenCharacter" class="btn btn-primary btn-block" onclick="GetCharacters()">Gen</div>
+    </div>
+</div>
+@if (Model != null)
+{
+    <div class="row">
+        <div class="col-sm-12"><h4>@Model.Name</h4>
+            <div><strong>@Model.Title.Description</strong></div>
+            <div><em>@Model.Actor.Category</em></div>
+        </div>
+        <p />
+        <div class="class-sm-12">
+            <div class="col-sm-6">
+                <div><u>Personality</u></div>
+                <div>@Model.Actor.Description</div>
+                <p />
+                <div><u>Origins</u></div>
+                <div>@Model.World.Description.Substring(0, Model.World.Description.Length - 1), where @Model.Name can be found.</div>
+                <p />
+                <div>@Model.Society.Description</div>
+            </div>
+            <div class="col-sm-6">
+                <div><u>Affects</u></div>
+                <div>@Model.Name @Model.Weapon.Carries @Model.Weapon.Name.</div>
+                <p />
+                <div>
+                    <span>@Model.Name has @Model.Vehicle.Condition.NamePrep @Model.Vehicle.Condition.Name </span>
+                    <span>@Model.Vehicle.Characteristic.Name @Model.Vehicle.BaseVehicle.Name vehicle made of @Model.Vehicle.Material.Name. </span>
+                    <span>Created in @Model.Vehicle.Technology.NamePrep "@Model.Vehicle.Technology.Name" era, </span>
+                    <span>the @Model.Vehicle.Power.Name powered vehicle is @Model.Vehicle.Condition.Name.</span>
+                    <span>The @Model.Vehicle.Movement.Name.ToLower() </span>
+                    <span>@Model.Vehicle.BaseVehicle.Name requires a crew of @Model.Vehicle.Size.Desc, </span>
+                    <span>has @Model.Vehicle.Speed.NamePrep @Model.Vehicle.Speed.Name top speed </span>
+                    <span>and @Model.Vehicle.Range.NamePrep @Model.Vehicle.Range.Name range.</span>
+                </div>
+                <p />
+                <div>
+                    <span>This vehicle has @Model.Vehicle.Offenses.Name armament and </span>
+                    <span>@Model.Vehicle.Armor.Name armor, and </span>
+                    <span>is equiped with @Model.Vehicle.Defenses.Name. </span>
+                    <span>Compared to similar vehicles, this vehicle has @Model.Vehicle.Cargo.NamePrep @Model.Vehicle.Cargo.Name cargo capacity.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p/>
+    <div class="row">
+        <div class="col-sm-12">
+            <div><u>Game</u></div>
+            <div>This is an <span>@Model.Theme.Mood.Name</span> 
+                <span>@Model.Theme.Genre.Name</span> 
+                <span>@Model.Theme.Type.Name game</span> 
+            set in @Model.Society.Descriptor.NamePrep @Model.Society.Descriptor.Name [PLACE] 
+            and using @Model.Mechanics.Primary.Name mechanics.</div>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+
+    var CharacterClass = 'Character';
+        
+    function GetCharacters() {
+        $.ajax({
+            method: 'get',
+            url: '@Url.Action("_Z_")'.replace('_Z_', CharacterClass),
+            dataType: 'html',
+            success: function (data) {
+                //  reload this partial view with the new view model
+                //  This ID tag is on the parent DIV in the Index, and
+                //  does NOT appear in this view.
+                $('#Partial' + CharacterClass).html(data);
+            }
+        });
+    };
+
+</script>

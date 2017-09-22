@@ -1,0 +1,109 @@
+﻿@{
+    ViewBag.Title = "Sparks";
+}
+<head>
+    @Scripts.Render("~/Content/css")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/sparks")
+    <style>
+        div {
+            /*border: 1px solid blue;*/
+        }
+    </style>
+</head>
+<body>
+    <h2>Sparks <small>@ViewBag.Jabber</small></h2>
+    <span>@DateTime.Now</span>
+    <div class="container well hidden">
+        <h3>Icons</h3>
+        <div class="row">
+            <div class="col-sm-12">
+                <span class="glyphicon glyphicon-asterisk"></span>
+                <span class="glyphicon glyphicon-plus"></span>
+                <span class="glyphicon glyphicon-minus"></span>
+                <span class="glyphicon glyphicon-user"></span>
+                <span class="glyphicon glyphicon-ok"></span>
+                <span class="glyphicon glyphicon-remove"></span>
+                <span class="glyphicon glyphicon-cog"></span>
+                <span class="glyphicon glyphicon-repeat"></span>
+                <span class="glyphicon glyphicon-refresh"></span>
+                <span class="glyphicon glyphicon-lock"></span>
+                <span class="glyphicon glyphicon-plus-sign"></span>
+                <span class="glyphicon glyphicon-minus-sign"></span>
+                <span class="glyphicon glyphicon-remove-sign"></span>
+                <span class="glyphicon glyphicon-remove-circle"></span>
+                <span class="glyphicon glyphicon-fire"></span>
+                <span class="glyphicon glyphicon-random"></span>
+                <span class="glyphicon glyphicon-magnet"></span>
+                <!--<span class="glyphicon glyphicon-king"></span>
+                <span class="glyphicon glyphicon-queen"></span>
+                <span class="glyphicon glyphicon-bishop"></span>
+                <span class="glyphicon glyphicon-knight"></span>-->
+                <span class="glyphicon glyphicon-tower"></span>
+                <!--<span class="glyphicon glyphicon-pawn"></span>
+                <span class="glyphicon glyphicon-oil"></span>
+                <span class="glyphicon glyphicon-grain"></span>-->
+            </div>
+        </div>
+    </div>
+    <div class="container well">
+        @Html.Partial("_Theme")
+    </div>
+    <div class="container well">
+        @Html.Partial("_Mechanics")
+    </div>
+    <div class="container well">
+        @Html.Partial("_GameIdea")
+    </div>
+    <div class="container well">
+        @Html.Partial("_Game")
+    </div>
+    <div class="container well">
+        @Html.Partial("_Character")
+    </div>
+    <div class="container well">
+        @Html.Partial("_Name")
+    </div>
+    <div class="container well">
+        @Html.Partial("_Title")
+    </div>
+    <div class="container well">
+        @Html.Partial("_Species")
+    </div>
+    <div class="container well">
+        @Html.Partial("_Weapon")
+    </div>
+    <div class="container well">
+        @Html.Partial("_Vehicle")
+    </div>
+    <div class="container well">
+        @Html.Partial("_Location")
+    </div>
+    <div class="container well">
+        @Html.Partial("_World")
+    </div>
+    <div class="container well">
+        @Html.Partial("_Society")
+    </div>
+    <div class="container well">
+        <h3>Enemies</h3>
+        <div class="row">
+            <div class="col-sm-8">
+                <div>Brutes tend to have high damage, low defenses, high HP. They're fairly straightforward, get in someone's face and beat until one of you falls over.</div>
+                <div>Soldiers have high defenses with average HP and average damage. They have abilities that add disincentives to attacking other creatures, like marking or taking hits for them. They act like PC defenders, eating attacks on their higher defenses so that more fragile creatures can do their thing.</div>
+                <div>Artillery are straight-forward, packing a powerful ranged attack in exchange for weak HP and defenses. Hang back and shoot, simple stuff.</div>
+                <div>Skirmishers are average HP and defenses, with abilities to get above average damage. Their shtick is mobility, using special movement abilities to run circles around the PCs to get to their squishy types.</div>
+                <div>Artillery are straight-forward, packing a powerful ranged attack in exchange for weak HP and defenses. Hang back and shoot, simple stuff.</div>
+                <div>Lurkers are fun, they have low HP, but have some kind of hide or fortify ability that makes them hard to hit, find, or damage for a round. They also tend to get almost twice the damage when using that escape ability. Play them as sneaky types, use their hiding ability to avoid all attacks, then jumping out to absolutely destroy some poor PC.</div>
+                <div>Controller's are the most varied monsters, similar to PC controllers. Essentially, they ruin PC plans, moving them around, nailing them with bad save ends, creating detrimental zones. Read up on the powers of any Controller monster, since many of them won't play quite the same.</div>
+                <div>Leader as a monster role is more of a sub-class. Any role of monster can be a leader, and they most often have some kind of buffing ability or aura. Simple stuff when you know the ability, just remember to throw out that buff in combat and that's that role fulfilled.</div>
+            </div>
+            <div class="col-sm-4">
+                <div class="btn btn-primary btn-block">Regen</div>
+                <div class="btn btn-primary btn-block">Save</div>
+            </div>
+        </div>
+    </div>
+</body>
+

@@ -1,0 +1,112 @@
+﻿<div class="row">
+    <div class="col-sm-5"><h3>Language <small>Mimics linguistic properties of real languages</small></h3></div>
+    <div class="col-sm-3">
+        <div class="btn-group">
+            <div id="NameByLanguage" class="btn btn-primary btn-sm btn-language-toggle">Names</div>
+            <div id="SentenceByLanguage" class="btn btn-primary btn-sm btn-language-toggle">Sentences</div>
+            <div id="ParagraphByLanguage" class="btn btn-primary btn-sm btn-language-toggle">Paragraphs</div>
+        </div>
+    </div>
+    <div class="col-sm-2" style="margin-bottom:5px">
+        <label for="languageSelector">Language</label>
+        <select class="form-control" id="languageSelector">
+            <option>None</option>
+        </select>
+    </div>
+    <div class="col-sm-2">
+        <label for="dialectSelector">Dialect</label>
+        <select class="form-control" id="dialectSelector">
+            <option value="1">Normal</option>
+            <option value="0">Consonant Heavy</option>
+            <option value="2">Vowel Heavy</option>
+        </select>
+    </div>
+</div>
+<div id="NameData" class="row">
+    <div class="col-sm-12 data-area" data-url="WordByLanguageID" data-size="2">
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var element = $('#NameData .data-area');
+        element.data('display', DisplayName);
+        element.data('parameters', NameParameters);
+
+        $('#NameByLanguage').on('click', function () {
+            element.attr('data-url', 'WordByLanguageID');
+            element.attr('data-size', '2');
+            element.data('forceWaitModal', false);
+            $('.btn-language-toggle').removeClass('active');
+            $('.btn-language-toggle').removeClass('btn-success');
+            $(this).addClass('active');
+            $(this).addClass('btn-success');
+            element.data('default-count', 6);
+            SetCount(6);
+        });
+        $('#NameByLanguage').click();
+
+        $('#SentenceByLanguage').on('click', function () {
+            element.attr('data-url', 'SentenceByLanguageID');
+            element.attr('data-size', '4');
+            element.data('forceWaitModal', true);
+            $('.btn-language-toggle').removeClass('active');
+            $('.btn-language-toggle').removeClass('btn-success');
+            $(this).addClass('active');
+            $(this).addClass('btn-success');
+            element.data('default-count', 3);
+            SetCount(3);
+        });
+
+        $('#ParagraphByLanguage').on('click', function () {
+            element.attr('data-url', 'ParagraphByLanguageID');
+            element.attr('data-size', '6');
+            element.data('forceWaitModal', true);
+            $('.btn-language-toggle').removeClass('active');
+            $('.btn-language-toggle').removeClass('btn-success');
+            $(this).addClass('active');
+            $(this).addClass('btn-success');
+            element.data('default-count', 2);
+            SetCount(2);
+        });
+
+        RequestLanguages();
+    });
+
+    //  Takes a VmGeneral object in JSON format as
+    //  its parameter. This object contains name
+    //  information. Returns the object as HTML.
+    function DisplayName(item) {
+        return item;
+    }
+
+    function NameParameters() {
+        return {
+            count: GetCount(),
+            languageID: $('#languageSelector').find('option:selected').attr('value'),
+            dialect: $('#dialectSelector').find('option:selected').attr('value')
+        };
+    }
+
+    function RequestLanguages() {
+        $.ajax({
+            method: 'get',
+            url: 'Sparks/Languages',
+            dataType: 'json',
+            success: function (data) {
+                SetupLanguageDropdown(data);
+            }
+        });
+    }
+
+    function SetupLanguageDropdown(data) {
+        var dropdown = $('#languageSelector');
+        dropdown.empty();
+        for (var i = 0; i < data.length; i++) {
+            var option = $('<option></option>');
+            option.text(data[i].Name);
+            option.attr('value', data[i].ID);
+            if (data[i].Description) option.attr('data-subtext', data[i].Description);
+            dropdown.append(option);
+        }
+    }
+</script>

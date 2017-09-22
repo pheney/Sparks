@@ -1,0 +1,78 @@
+﻿<div class="row">
+    <div class="col-sm-4"><h3>Archetypes <small>Short character summary</small></h3></div>
+    <div class="col-sm-8">
+        <br/>
+        <div id="titleAny" class="btn btn-primary btn-xs">Any</div>
+        <span>|</span>
+        <div id="titleHeroic" class="btn btn-primary btn-xs btn-title-toggle" data-profession-id="0">Heroic</div>
+        <div id="titleMagic" class="btn btn-primary btn-xs btn-title-toggle" data-profession-id="1">Magic</div>
+        <div id="titleMelee" class="btn btn-primary btn-xs btn-title-toggle" data-profession-id="2">Melee</div>
+        <div id="titleShooter" class="btn btn-primary btn-xs btn-title-toggle" data-profession-id="4">Ranged</div>
+        <div id="titleSavage" class="btn btn-primary btn-xs btn-title-toggle" data-profession-id="3">Savage</div>
+        <span>|</span>
+        <div id="titlePolitical" class="btn btn-primary btn-xs btn-title-toggle" data-profession-id="5">Political</div>
+        <span>|</span>
+        <div id="titleProfessional" class="btn btn-primary btn-xs btn-title-toggle" data-profession-id="6">Professional</div>
+        <div id="titleTechnology" class="btn btn-primary btn-xs btn-title-toggle" data-profession-id="7">Technology</div>
+        <div id="titleEngineer" class="btn btn-primary btn-xs btn-title-toggle" data-profession-id="9">Engineer</div>
+        <span>|</span>
+        <div id="titleScience" class="btn btn-primary btn-xs btn-title-toggle" data-profession-id="8">Scientist</div>
+        <div id="titleMedical" class="btn btn-primary btn-xs btn-title-toggle" data-profession-id="10">Medical</div>       
+    </div>
+</div>
+<div id="ArchetypeData" class="row">
+    <div class="col-sm-12 data-area" data-url="Title" data-size="3">
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var element = $('#ArchetypeData .data-area');
+        element.data('parameters', TitleParameters);
+        element.data('default-count', 4);
+
+        $('#titleAny').on('click', function () {
+            var thisButton = $(this);
+            var titleButtons = $('.btn-title-toggle');
+            LockButtonDown(titleButtons, false);
+            LockButtonDown(thisButton, true);
+        });
+
+        $('.btn-title-toggle').on('click', function () {
+            var anyButton = $('#titleAny');
+            var button = $(this);
+            var isPushed = button.hasClass('active');
+            if (isPushed) {
+                LockButtonDown(button, false);
+                var totalPushed = $('.btn-title-toggle.active').length;
+                if (totalPushed == 0) {
+                    LockButtonDown(anyButton, true);
+                }
+            } else {
+                LockButtonDown(button, true);
+                LockButtonDown(anyButton, false);
+            }
+        });
+
+        $('#titleAny').click();
+    });
+
+    function TitleParameters() {
+        return {
+            count: GetCount(),
+            titleTypes: GetSelectedTitleTypes()
+        };
+    }
+
+    function GetSelectedTitleTypes() {
+        var result = [];
+        var useAll = $('#titleAny').hasClass('active');
+        $('.btn-title-toggle').each(function (index, element) {
+            var jqElement = $(element);
+            var isPushed = jqElement.hasClass('active');
+            if (isPushed || useAll) {
+                result.push(jqElement.data('profession-id'));
+            }
+        });
+        return JSON.stringify(result);
+    }
+</script>

@@ -1,0 +1,25 @@
+﻿<div class="row">
+    <div class="col-sm-12"><h3>Vehicles <small>Defined by their purpose, e.g., Cargo transport, Construction</small></h3></div>
+</div>
+<div id="VehiclePurposeData" class="row">
+    <div class="col-sm-12 data-area" data-url="VehicleByPurpose" data-size="3">
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var element = $('#VehiclePurposeData .data-area');
+        element.data('display', VehiclePurposeDisplay);
+        element.data('default-count', 4);
+    });
+
+    //  Takes a VmGeneral object in JSON format as
+    //  its parameter. This object contains Vehicle
+    //  information. Returns the object as HTML.
+    function VehiclePurposeDisplay(item) {
+        var result = "";
+        if (item.Condition) result = item.Condition.Name + ' ';
+        result += item.BaseVehicle.Name;
+        if (item.Characteristic) result += ' (' + item.Characteristic.Name + ')';
+        return ProperCase(result);
+    }
+</script>

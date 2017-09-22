@@ -1,0 +1,17 @@
+﻿<div class="row">
+    <div class="col-sm-12"><h3>Themes <small>Evocative story ideas</small></h3></div>
+</div>
+<div id="ThemeData" class="row">
+    <div class="col-sm-12 data-area" data-url="Theme" data-size="4">
+    </div>
+    <div class="template hide">
+        <div class="theme-literary"></div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var element = $('#ThemeData .data-area');
+        element.data('display', DisplayItemDescription);
+        element.data('default-count', 3);
+    });
+</script>

@@ -1,0 +1,592 @@
+﻿<head>
+    <title>Sparks</title>
+    <!--
+    Styles.Render("~/Content/css")
+    Scripts.Render("~/bundles/jquery")
+    Scripts.Render("~/bundles/bootstrap")
+    Scripts.Render("~/bundles/sparksjs") 
+    -->
+</head>
+<body>
+    <h2>Sparks <small>inspiration engine</small></h2>
+    <div>@DateTime.Now</div>
+    <div class="row">
+
+        <!-- Generation Controls -->
+        <div class="col-sm-10">
+            <div class="container well">
+                <div id="Help" class="btn btn-info">Help</div>
+                <div class="btn-group">
+                    <div class="btn btn-primary btn-section" data-sectionId="Traditional">Board &amp; Card Game</div>
+                    <div class="btn btn-primary btn-section" data-sectionId="Digital">Videogame</div>
+                </div>
+
+                <div class="btn-group">
+                    <div class="btn btn-primary btn-section" data-sectionId="Theme">Theme</div>
+                    <div class="btn btn-primary btn-section" data-sectionId="Mechanic">Mechanic</div>
+                    <div class="btn btn-primary btn-section" data-sectionId="Genre">Genre</div>
+                </div>
+
+                <div class="btn-group hide">
+                    <div class="btn btn-primary btn-danger btn-section" data-sectionId="Anything">Anything</div>
+                    <div class="btn btn-primary btn-danger btn-section" data-sectionId="Everything">Everything</div>
+                </div>
+
+                <div class="btn-group">
+                    <div class="btn btn-primary btn-section" data-sectionId="Character">Character</div>
+                    <div class="btn btn-primary btn-section" data-sectionId="Name">Language</div>
+                    <div class="btn btn-primary btn-section" data-sectionId="Archetype">Archetype</div>
+                    <div class="btn btn-primary btn-section" data-sectionId="Species">Species</div>
+                    <div class="btn btn-primary btn-section" data-sectionId="PersonalWeapon">Weapon</div>
+                    <div class="btn btn-primary btn-section" data-sectionId="Tool">Equipment</div>
+                </div>
+
+                <div class="btn-group">
+                    <div class="btn btn-primary btn-section" data-sectionId="Vehicle">Vehicle</div>
+                    <div class="btn btn-primary btn-section" data-sectionId="VehicleByPurpose">Purpose</div>
+                    <div class="btn btn-primary btn-section" data-sectionId="VehicleByMovement">Movement</div>
+                    <div class="btn btn-primary btn-section" data-sectionId="VehicleTactical">Tactical</div>
+                    <div class="btn btn-primary btn-section" data-sectionId="VehicleWarship">Warship</div>
+                </div>
+
+                <div class="btn-group">
+                    <div class="btn btn-primary btn-section" data-sectionId="World">World</div>
+                    <div class="btn btn-primary btn-section" data-sectionId="Star">Star</div>
+                    <div class="btn btn-primary btn-section" data-sectionId="Planet">Planet</div>
+                    <div class="btn btn-primary btn-section" data-sectionId="Landmass">Landmass</div>
+                    <div class="btn btn-primary btn-section" data-sectionId="Waterbody">Water Body</div>
+                    <div class="btn btn-primary btn-section" data-sectionId="Ecology">Ecology</div>
+                    <div class="btn btn-primary btn-section" data-sectionId="Place">Exotic Site</div>
+                </div>
+                
+                <div class="btn-group">
+                    <div id="ToggleColor" class="btn btn-primary"></div>
+                    <div id="ClearResults" class="btn btn-primary">Clear Results</div>
+                    <div id="Print" class="btn btn-primary">Print Favorites</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quantity Generation Control -->
+        <div class="col-sm-2">
+            <div class="container well">
+                <div id="CountID" class="text-success text-giant text-center" style="font-weight:900;">5</div>
+                <div class="text-center">
+                    <div class="btn-group-sm">
+                        <div id="CountUpUpID" class="btn btn-primary btn-xs">
+                            <span class="glyphicon glyphicon-plus-sign"></span>
+                            <span class="glyphicon glyphicon-plus-sign"></span>
+                        </div>
+                        <div id="CountUpID" class="btn btn-primary btn-xs">
+                            <span class="glyphicon glyphicon-plus-sign"></span>
+                        </div>
+                    </div>
+                    <div class="btn-group-sm">
+                        <div id="CountDownID" class="btn btn-primary btn-xs">
+                            <span class="glyphicon glyphicon-minus-sign"></span>
+                        </div>
+                        <div id="CountDownDownID" class="btn btn-primary btn-xs">
+                            <span class="glyphicon glyphicon-minus-sign"></span>
+                            <span class="glyphicon glyphicon-minus-sign"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <!-- Data Display Areas -->
+        <div id="AnythingSectionID" class="container well section hide">
+            @Html.Partial("_Anything")
+        </div>
+        <div id="TraditionalSectionID" class="container well section hide">
+            @Html.Partial("_Traditional")
+        </div>
+        <div id="DigitalSectionID" class="container well section hide">
+            @Html.Partial("_Digital")
+        </div>
+        <div id="CharacterSectionID" class="container well section hide">
+            @Html.Partial("_Character")
+        </div>
+        <div id="NameSectionID" class="container well section hide">
+            @Html.Partial("_Name")
+        </div>
+        <div id="ArchetypeSectionID" class="container well section hide">
+            @Html.Partial("_Title")
+        </div>
+        <div id="SpeciesSectionID" class="container well section hide">
+            @Html.Partial("_Species")
+        </div>
+        <div id="PersonalWeaponSectionID" class="container well section hide">
+            @Html.Partial("_Weapon")
+        </div>
+        <div id="ToolSectionID" class="container well section hide">
+            @Html.Partial("_Tool")
+        </div>
+        <div id="VehicleSectionID" class="container well section hide">
+            @Html.Partial("_Vehicle")
+        </div>
+        <div id="VehicleByPurposeSectionID" class="container well section hide">
+            @Html.Partial("_VehicleByPurpose")
+        </div>
+        <div id="VehicleByMovementSectionID" class="container well section hide">
+            @Html.Partial("_VehicleByMovement")
+        </div>
+        <div id="VehicleTacticalSectionID" class="container well section hide">
+            @Html.Partial("_VehicleTactical")
+        </div>
+        <div id="VehicleWarshipSectionID" class="container well section hide">
+            @Html.Partial("_VehicleWarship")
+        </div>
+        <div id="WorldSectionID" class="container well section hide">
+            @Html.Partial("_World")
+        </div>
+        <div id="StarSectionID" class="container well section hide">
+            @Html.Partial("_Star")
+        </div>
+        <div id="PlanetSectionID" class="container well section hide">
+            @Html.Partial("_Planet")
+        </div>
+        <div id="LandmassSectionID" class="container well section hide">
+            @Html.Partial("_Landmass")
+        </div>
+        <div id="WaterbodySectionID" class="container well section hide">
+            @Html.Partial("_Waterbody")
+        </div>
+        <div id="EcologySectionID" class="container well section hide">
+            @Html.Partial("_Ecology")
+        </div>
+        <div id="PlaceSectionID" class="container well section hide">
+            @Html.Partial("_Location")
+        </div>
+        <div id="ThemeSectionID" class="container well section hide">
+            @Html.Partial("_Theme")
+        </div>
+        <div id="MechanicSectionID" class="container well section hide">
+            @Html.Partial("_Mechanics")
+        </div>
+        <div id="GenreSectionID" class="container well section hide">
+            @Html.Partial("_Genre")
+        </div>
+        <div id="EverythingSectionID" class="container well section hide">
+            @Html.Partial("_Everything")
+        </div>
+    </div>
+    <div>
+        <a class="btn btn-primary btn-xs" href='@Url.Action("Index","Database")'>database</a>
+    </div>
+    <div id="WaitModalID" class="modal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id="MessageID" class="modal-body text-danger text-center text-giant">
+                    <span class="letter l-1">L</span>
+                    <span class="letter l-2">o</span>
+                    <span class="letter l-3">a</span>
+                    <span class="letter l-4">d</span>
+                    <span class="letter l-5">i</span>
+                    <span class="letter l-6">n</span>
+                    <span class="letter l-7">g</span>
+                    <span class="letter l-8">.</span>
+                    <span class="letter l-9">.</span>
+                    <span class="letter l-10">.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="MessageModalID" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="data modal-body text-success"></div>
+            </div>
+        </div>
+    </div>
+    <div id="HelpModalID" class="modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <strong><em class="text-large">Sparks</em></strong> is meant to provide inspiration for game and story design.
+                    It should go without saying that all results generated here are just ideas
+                    and suggestions. You should feel free to keep, disregard, or change anything
+                    you want. The whole point is to get the imagination flowing!
+                </div>
+                <div class="modal-body">
+                    <p>Select a category button to generate items. Click again to generate more items.</p>
+                    <p>Selecting a category will set the initial generation number to a default value.</p>
+                    <p>Use the control on the right to adjust the number of items generated.</p>
+                    <p>Items can be <strong><em>favorited</em></strong> by clicking on them, causing
+                    a small padlock to appear on the item. Click again to unfavorite something. Favorites are 
+                    retained when generating additional items and while viewing other categories.</p>
+                    <p>Use the <strong>Print Favorites</strong> button to open a printer-friendly window
+                    containing all favorited items.</p>
+                    <p class="text-center text-giant"><strong>Have Fun!</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    var printWindow = null;
+    var YEAR = '@DateTime.Now.Year';
+
+    $(document).ready(function () {
+        //  configure the buttons to show their respective sections
+        $('.btn-section').each(function (index, element) {
+            $(element).on('click', function () {
+                ShowSection(this);
+                RequestData(this);
+            });
+        })
+
+        //  configure the count-adjustment buttons
+        $('#CountUpID').on('click', function () { AdjustCount(1) });
+        $('#CountUpUpID').on('click', function () { AdjustCount(15) });
+        $('#CountDownID').on('click', function () { AdjustCount(-1) });
+        $('#CountDownDownID').on('click', function () { AdjustCount(-15) });
+
+        //  configure the clear-data button
+        $('#ClearResults').on('click', ClearResults);
+        
+        //  configure the print button
+        $('#Print').on('click', PrintPreview);
+
+        //  configure the helpbutton
+        $('#Help').on('click', function () {
+            $('#HelpModalID').modal();
+        });
+
+        //  configure the colorbutton
+        $('#ToggleColor').on('click', function () {
+            var button = $(this);
+            var mono = button.data('monochrome');
+            if (mono) {
+                button.data('monochrome', false);
+                button.html('Color');
+            }else {
+                button.data('monochrome',true);
+                button.html('Monochrome');
+            }
+        });
+        $('#ToggleColor').click();
+        $('#ToggleColor').click();
+
+        SetCount(5);
+    });
+
+    //  Returns a DIV element that contains a COPY (clone)
+    //  of all items that the user has locked.
+    //  Returns NULL if nothing has been locked.
+    function GetAllKeepItems() {
+        var result = $('<div></div>');
+        var sections = $('.section');
+        
+        //  check each section for data to keep
+        $.each(sections, function (index, section) {
+            var sectionTitle = $(section).find('h3').first().clone();
+            sectionTitle.find('small').text('');
+            var sectionData = $(section).find('.data-area');
+            var keep = sectionData.find('.keep');
+            if (keep.length > 0) {
+                result.append(sectionTitle);
+                var visible = keep.clone();
+                visible.css('background-color', '');
+                visible.css('padding-left', '5px');
+                result.append(visible);
+            }
+        });
+        if (result.children().length == 0) result = null;
+        return result;
+    }
+
+    //  Returns '{current year} - Nuance Studios LLC'
+    function GetCopyright() {
+        return YEAR + " - Nuance Studios LLC";
+    }
+
+    //  Generates a page formatted for printing.
+    //  Page contains all items that have been 'locked' by the
+    //  user.
+    function PrintPreview() {
+        if (printWindow) printWindow.close();
+        printWindow = window.open("", "", "fullscreen=1,location=1,status=1,scrollbars=1");
+        printWindow.document.write('<html><head>');
+        printWindow.document.write('<title>Sparks (Printer Friendly Summary) - Nuance Studios LLC</title>');
+        printWindow.document.write('<style type="text/css">');
+        printWindow.document.write('.hide{display:none;}');
+        printWindow.document.write('@@media print{.no-print{display:none !important;}}');
+        printWindow.document.write('</style>');
+        printWindow.document.write('</head><body>');
+
+        //include data here.
+        var items = GetAllKeepItems();
+        if (items) {
+
+            //Print and cancel button
+            printWindow.document.write('<div style="width:100%;text-align:right">');
+            printWindow.document.write('<input type="button" id="btnPrint" value="Print" class="no-print" style="width:100px" onclick="window.print()" />');
+            printWindow.document.write('</div>');
+
+            //  header
+            printWindow.document.write('<header>');
+            printWindow.document.write('<p/><h2 style="display:inline">Sparks</h2> <em><strong>&copy; ' + GetCopyright() + '</strong></em><p/>');
+            printWindow.document.write('</header>');
+
+            printWindow.document.write(items.html());
+
+            //  footer
+            printWindow.document.write('<p/><footer>');
+            printWindow.document.write('<strong>&copy; ' + GetCopyright() + '</strong>');
+            printWindow.document.write('</footer>');
+
+        } else {
+            printWindow.document.write('<div>You have nothing selected to keep! Try clicking on items in the display area.</div>');
+        }
+
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.focus();
+    }
+
+    function ClearResults() {
+        var section = $('.section').not('.hide').find('.data-area');
+        if (section) ClearData(section);
+    }
+
+    //  helper to display a section (and hide the rest)
+    function ShowSection(sectionButton) {
+        var visibleSectionId = $('.section:not(.hide)').attr('id');
+        var sectionId = $(sectionButton).attr('data-sectionId') + 'SectionID';
+
+        if (visibleSectionId != sectionId) {
+            //  switching visible section
+            $('#' + visibleSectionId).addClass('hide');
+            var section = $('#' + sectionId);
+            section.removeClass('hide');
+            section.show();
+            var dataArea = section.find('.data-area');
+            var defaultCount = dataArea.data('default-count');
+            if (defaultCount) SetCount(defaultCount);
+        }
+    }
+
+    function BuildUrl(method) {
+        return '@Url.Action("_Z_")'.replace('_Z_', method);
+    }
+
+    //  helper to request data for the visible section
+    function RequestData(requestingButton) {
+        var button = $(requestingButton);
+        var sectionName = button.attr('data-sectionId');
+        var dataArea = $('#' + sectionName + 'SectionID').find('.data-area');
+        var url = dataArea.attr('data-url');
+        var size = parseInt(dataArea.attr('data-size'), 10);
+        var displayFunction = dataArea.data('display');
+        if (!displayFunction) displayFunction = DisplayItem;
+
+        var data = { count: GetCount() }
+        var paramFunction = dataArea.data('parameters');
+        if (paramFunction) data = paramFunction();
+
+        var forceWaitModal = dataArea.data('forceWaitModal');
+        var showWaitModal = (data.count > 10 || forceWaitModal);
+
+        $.ajax({
+            method: 'get',
+            url: BuildUrl(url),
+            data: data,
+            dataType: 'json',
+            beforeSend: function () {
+                SetButtonColor(button, 'warning');
+                if (showWaitModal) $('#WaitModalID').modal();
+            },
+            success: function (data) {
+                ClearData(dataArea);
+                InsertData(data, dataArea, size, displayFunction);
+                SetButtonColor(button, 'success');
+            },
+            error: function () {
+                SetButtonColor(button, 'danger');
+            },
+            complete: function () {
+                if (showWaitModal) $('#WaitModalID').modal('toggle');
+            }
+        });
+    }
+
+    //  Helper to change classes on buttons to
+    //  indicate pending status of ajax requests.
+    //  Usage: function(button, 'warning')
+    function SetButtonColor(button, className) {
+        ClearButtonColors();
+        button.addClass('btn-' + className);
+    }
+
+    //  Helper to remove classes from buttons.
+    //  Classes removed are success, warning and danger.
+    function ClearButtonColors() {
+        $('.btn-section').each(function (index, element) {
+            var button = $(element);
+            button.removeClass('btn-success');
+            button.removeClass('btn-warning');
+            button.removeClass('btn-danger');
+        });
+    }
+
+    ///     Dynamic HTML for results
+
+    //  Removes all children of the data area parameter,
+    //  as long as they don't have the 'keep' class
+    function ClearData(dataArea) {
+        dataArea.children(':not(.keep)').remove();
+    }
+
+    //  Inserts all the items in the data list into
+    //  the data area. The items are inserted at the
+    //  beginning of the area.
+    function InsertData(dataList, dataArea, columnWidth, displayFunction) {
+        for (var i = 0; i < dataList.length ; i++) {
+            var element = CreateDataContainer(columnWidth);
+            var item = dataList[i];
+            element.html(displayFunction(item));
+            dataArea.prepend(element);
+        }
+    }
+
+    //  Assigns 'value' to the '.data' element within the sectionClass.
+    //  Assumes this format:
+    //  <div id='rootelement'>
+    //      <div class="selectionClass hide">
+    //          words words <span class='data'></span>
+    //      </div>
+    //  </div>
+    function SetChildDataElement(rootElement, childSelector, value) {
+        var element = rootElement.find(childSelector);
+        element.find('.data').html(value);
+        element.removeClass('hide');
+    }
+
+    //  Returns an empty DIV element with the
+    //  col-sm class equal to the width, e.g., col-sm-4
+    function CreateDataContainer(width) {
+        var shades = 4;
+        var difference = 10;
+
+        var element = $("<div></div>");
+        element.css('border-radius', '5px');
+        element.css('border', '1px solid #a0a0a0');
+
+        var r = 255 - ((shades - 1) * difference) + Math.floor(Math.random() * shades) * difference;
+        var b = r, g = r;
+        
+        var mono =  $('#ToggleColor').data('monochrome');
+        if (!mono) {
+            g = 255 - ((shades - 1) * difference) + Math.floor(Math.random() * shades) * difference;
+            b = 255 - ((shades - 1) * difference) + Math.floor(Math.random() * shades) * difference;
+        }
+        element.css('background-color', 'rgb(' + r + ',' + g + ',' + b + ')');
+        element.addClass("col-sm-" + width);
+        element.on('click', ToggleKeep);
+
+        return element;
+    }
+
+    ////    Special text casing
+
+    //  Default function for displaying data
+    function DisplayItem(item) {
+        return ProperCase(item.Name);
+    }
+
+    //  function for displaying data
+    function DisplayItemDescription(item) {
+        return ProperCase(item.Description);
+    }
+
+    //  fixes case on intialized terms, such as IR or X-ray
+    function CustomCase(text) {
+        var hasSpecial = text.indexOf('^') > -1;
+        if (!hasSpecial) return text;
+
+        var parts = text.split("^");
+        for (var i = 0; i < parts.length; i++) {
+            var abbr = i % 2 == 1;
+            if (abbr) parts[i] = parts[i].toUpperCase();
+        }
+        return parts.join('');
+    }
+
+    function ProperCase(text) {
+        return CustomCase(text.substring(0, 1).toUpperCase() + text.substring(1).toLowerCase());
+    }
+
+    ////    Toggle items
+
+    //  Turns on and off the 'lock' icon for elements
+    function ToggleKeep() {
+        var element = $(this);
+        if (element.hasClass('keep')) {
+            element.removeClass('keep');
+            element.find('#KeepIcon').remove();
+        } else {
+            element.addClass('keep');
+            var icon = $('<span></span>');
+            icon.attr('id', 'KeepIcon');
+            icon.css('margin-right', '5px');
+            icon.addClass('glyphicon');
+            icon.addClass('glyphicon-lock');
+            icon.addClass('keep-css');
+            element.prepend(icon);
+        }
+    }
+
+    //  helper for toggle-buttons so they visually
+    //  reflect their pressed / unpressed status
+    function LockButtonDown(jqButton, down) {
+        if (down) {
+            jqButton.addClass('active');
+            jqButton.addClass('btn-success');
+        } else {
+            jqButton.removeClass('active');
+            jqButton.removeClass('btn-success');
+        }
+    }
+
+    ////    Count Helpers
+
+    //  helper to adjust the 'generation' count
+    function AdjustCount(value) {
+        var count = GetCount();
+        count += value;
+        if (count < 1) count = 1;
+        SetCount(count);
+    }
+
+    //  helper to get the current count
+    function GetCount() {
+        var element = $('#CountID');
+        return parseInt(element.text(), 10);
+    }
+
+    //  Helper to set the current count
+    function SetCount(value) {
+        var element = $('#CountID');
+        element.text(value);
+    }
+
+    ////    Modal Message Helpers
+
+    //  Not used
+    function Notice(message) {
+        var info = $('<p>').html(message.split('\n').join("<br/>"));
+        HtmlNotice(info);
+    }
+
+    //  Not used
+    function HtmlNotice(htmlContent) {
+        var modal = $('#MessageModalID');
+        var content = modal.find('.data');
+        content.html(htmlContent);
+        modal.modal();
+        return modal;
+    }
+
+</script>

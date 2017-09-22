@@ -1,0 +1,110 @@
+﻿<div class="row">
+    <div class="col-sm-10"><h3>Societies <small>(TODO: finish this)</small></h3></div>
+    <div class="col-sm-1">
+        <div id="SocietyCount" class="btn btn-primary btn-block">3</div>
+    </div>
+    <div class="col-sm-1">
+        <div id="GenSociety" class="btn btn-primary btn-block">Gen</div>
+    </div>
+</div>
+<div class="row">
+    <div id="SocietyData" class="col-sm-12">
+    </div>
+</div>
+<script type="text/javascript">
+
+
+    var SocietyClass = 'Society';
+    var SocietyDataID = SocietyClass + 'Data';
+    var SocietyCountID = SocietyClass + 'Count';
+    var SocietyCycleChoices = [3, 5, 9, 20];
+
+    $(document).ready(function () {
+
+        $('#Gen' + SocietyClass).on('click', function () {
+            GetSocieties(2, 'Gen' + SocietyClass);
+        });
+        $('#' + SocietyCountID).on('click', function () {
+            CycleSocietyCount();
+        });
+
+        $('#Gen' + SocietyClass).click();
+    });
+
+    function GetSocieties(columns, buttonID) {
+        $.ajax({
+            method: 'get',
+            url: '@Url.Action("_Z_")'.replace('_Z_', SocietyClass),
+            data: {
+                count: $('#' + SocietyCountID).text() * columns,
+                attrChance : .5
+            },
+            dataType: 'json',
+            beforeSend: function () {
+                ClearSocietyButtons();
+                var btn = $('#' + buttonID);
+                btn.addClass('btn-warning');
+            },
+            success: function (data) {
+                $('#' + buttonID).addClass('btn-success');
+                DisplaySocieties(data, columns);
+            },
+            error: function () {
+                $('#' + buttonID).addClass('btn-danger');
+            }
+        });
+    };
+
+    function DisplaySocieties(dataList, columns) {
+        var container = $('#' + SocietyDataID);
+        container.empty();
+
+        var listSize = dataList.length;
+        var currentRow = null;
+        for (var i = 0 ; i < listSize ; i++) {
+            //  create new row
+            if (i % columns == 0) {
+                //  end previous row
+                if (i > 0) {
+                    container.append(currentRow);
+                }
+                currentRow = $('<div></div>');
+                currentRow.addClass('row');
+                currentRow.attr('style', 'border-bottom: 1px solid #d0d0d0');
+            }
+
+            //  add the element to the current row
+            currentRow.append(GetSocietyDiv(dataList[i]));
+        }
+        container.append(currentRow);
+    }
+
+    function GetSocietyDiv(Society) {
+        var itemDiv = $("<div></div>");
+        itemDiv.addClass(SocietyClass);
+        itemDiv.addClass("col-sm-6");
+        itemDiv.text(Society.Description);
+        return itemDiv;
+    }
+
+    function ClearSocietyButtons() {
+
+        var buttonIDs = ['GenSociety'];
+
+        buttonIDs.forEach(function (ID) {
+            var btn = $('#' + ID);
+            btn.removeClass('btn-warning');
+            btn.removeClass('btn-success');
+            btn.removeClass('btn-danger');
+        });
+    }
+
+    function CycleSocietyCount() {
+        var curCount = $('#' + SocietyCountID).text();
+        var index = SocietyCycleChoices.indexOf(parseInt(curCount));
+
+        index++;
+        if (index == SocietyCycleChoices.length) index = 0;
+        $('#' + SocietyCountID).text(SocietyCycleChoices[index]);
+    }
+</script>

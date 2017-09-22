@@ -1,0 +1,67 @@
+﻿<div class="row">
+    <div class="col-sm-12"><h3>Digital <small>Videogame ideas</small></h3></div>
+</div>
+<div id="DigitalData" class="row">
+    <div class="col-sm-12 data-area" data-url="Digital" data-size="4">
+    </div>
+    <div class="template hide">
+        <div class="hide features">
+            <strong>Features</strong> <span class="data"></span>
+        </div>
+        <div class="hide player">
+            <strong>Players control:</strong> <span class="data"></span>
+        </div>
+        <div class="hide gametype">
+            <strong>Game type:</strong> <span class="data"></span>
+        </div>
+        <div class="hide location">
+            <strong>Setting:</strong> <span class="data"></span>
+        </div>
+        <div class="hide theme">
+            <strong>Theme:</strong> <span class="data"></span>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var element = $('#DigitalData .data-area');
+        element.data('display', DisplayDigital);
+        element.data('default-count', 3);
+    });
+
+    function DisplayDigital(item) {
+        var result = $('#DigitalData .template').clone();
+    
+        //  components
+        if (item.Components) {
+            var list = $('<ul></ul>');
+            $.each(item.Components, function (index, component) {
+                var li = $('<li></li>');
+                li.html(component.Name);
+                list.append(li);
+            });
+            SetChildDataElement(result, '.features', list.prop('outerHTML'));
+        }
+
+        //  theme
+        if (item.Theme) SetChildDataElement(result, '.theme', item.Theme.LiterarySetting.Name);
+
+        //  gametype
+        if (item.GameType) SetChildDataElement(result, '.gametype', item.GameType.Name);
+
+        //  location
+        if (item.Location) SetChildDataElement(result, '.location', CustomCase(item.Location.Name));
+
+        //  player
+        if (item.Player) SetChildDataElement(result, '.player', item.Player.Name);
+
+        //  equipment
+        if (item.Equipment) {
+            result.find('.player > .data').append(" with " + item.Equipment.NamePrep + " " + CustomCase(item.Equipment.Name));
+        }
+
+        result.removeClass('hide');
+        result.removeClass('template');
+        return result;
+    }
+</script>

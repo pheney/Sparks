@@ -1,0 +1,116 @@
+﻿<div class="row">
+    <div class="col-sm-12"><h3>Traditional Games <small>Cards, boardgames, dice games</small></h3></div>
+</div>
+<div id="TraditionalData" class="row">
+    <div class="col-sm-12 data-area" data-url="Traditional" data-size="4">
+    </div>
+    <div class="template hide">
+        <div class="hide commitment">
+            <strong>Time commitment:</strong> <span class="data"></span>
+        </div>
+        <div class="hide components">
+            <strong>Components</strong> <span class="data"></span>
+        </div>
+        <div class="hide mechanics">
+            <strong>Core mechanic:</strong> <span class="data"></span>
+        </div>
+        <div class="hide player">
+            <strong>Players control:</strong> <span class="data"></span>
+        </div>
+        <div class="hide gametype">
+            <strong>Game type:</strong> <span class="data"></span>
+        </div>
+        <div class="hide location">
+            <strong>Setting:</strong> <span class="data"></span>
+        </div>
+        <div class="hide theme">
+            <strong>Theme:</strong> <span class="data"></span>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var element = $('#TraditionalData .data-area');
+        element.data('display', DisplayTraditional);
+        element.data('default-count', 3);
+    });
+
+    function DisplayTraditional(item) {
+        var result = $('#TraditionalData .template').clone();
+
+        //  time commitement
+        if (item.Commitment) {
+            var commit = item.Commitment.Description + " (" + item.Commitment.Name + " game)";
+            SetChildDataElement(result, '.commitment', commit);
+        }
+
+        //  components
+        if (item.Components) {
+            var list = $('<ul></ul>');
+            $.each(item.Components, function (index, component) {
+                var li = $('<li></li>');
+                li.html(component.Name);
+                list.append(li);
+            });
+            SetChildDataElement(result, '.components', list.prop('outerHTML'));
+        }
+
+        //  theme
+        if (item.Theme) SetChildDataElement(result, '.theme', item.Theme.LiterarySetting.Name);
+
+        //  gametype
+        if (item.GameType) SetChildDataElement(result, '.gametype', item.GameType.Name);
+
+        //  location
+        if (item.Location) SetChildDataElement(result, '.location', CustomCase(item.Location.Name));
+
+        //  ghame mechanics
+        if (item.Mechanics) {
+            var list = $('<ul></ul>');
+            if (item.Mechanics.Primary) {
+                var li = $('<li></li>');
+                li.html(item.Mechanics.Primary.Name);
+                list.append(li);
+            }
+            if (item.Mechanics.Secondary) {
+                var li = $('<li></li>');
+                li.html(item.Mechanics.Secondary.Name);
+                list.append(li);
+            }
+            if (item.Mechanics.Coop) {
+                var li = $('<li></li>');
+                li.html(item.Mechanics.Coop.Name);
+                list.append(li);
+            }
+            if (item.Mechanics.Movement) {
+                var li = $('<li></li>');
+                li.html("Map/movement: " + item.Mechanics.Movement.Name);
+                list.append(li);
+            }
+            if (item.Mechanics.Conflict) {
+                var li = $('<li></li>');
+                li.html("Contest resolution: " + item.Mechanics.Conflict.Name);
+                list.append(li);
+            }
+            if (item.Mechanics.Win) {
+                var li = $('<li></li>');
+                li.html("Win condition: " + item.Mechanics.Win.Name);
+                list.append(li);
+            }
+
+            SetChildDataElement(result, '.mechanics', list.prop('outerHTML'));
+        }
+
+        //  player
+        if (item.Player) SetChildDataElement(result, '.player', item.Player.Name);
+
+        //  equipment
+        if (item.Equipment) {
+            result.find('.player > .data').append(" with " + item.Equipment.NamePrep + " " + CustomCase(item.Equipment.Name));
+        }
+
+        result.removeClass('hide');
+        result.removeClass('template');
+        return result;
+    }
+</script>

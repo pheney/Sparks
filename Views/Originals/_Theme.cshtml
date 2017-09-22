@@ -1,0 +1,108 @@
+﻿<div class="row">
+    <div class="col-sm-10"><h3>Story Themes (repurpose)</h3></div>
+    <div class="col-sm-1">
+        <div id="ThemeCount" class="btn btn-primary btn-block">3</div>
+    </div>
+    <div class="col-sm-1">
+        <div id="GenTheme" class="btn btn-primary btn-block">Gen</div>
+    </div>
+</div>
+<div class="row">
+    <div id="ThemeData" class="col-sm-12">
+    </div>
+</div>
+<script type="text/javascript">
+
+    var ThemeClass = 'Theme';
+    var ThemeDataID = ThemeClass + 'Data';
+    var ThemeCountID = ThemeClass + 'Count';
+    var ThemeCycleChoices = [3, 5, 9, 20];
+
+    $(document).ready(function () {
+
+        $('#Gen' + ThemeClass).on('click', function () {
+            GetThemes(2, 'Gen' + ThemeClass);
+        });
+        $('#' + ThemeCountID).on('click', function () {
+            CycleThemeCount();
+        });
+
+        $('#Gen' + ThemeClass).click();
+    });
+
+    function GetThemes(columns, buttonID) {
+        $.ajax({
+            method: 'get',
+            url: '@Url.Action("_Z_")'.replace('_Z_', ThemeClass),
+            data: {
+                count: $('#' + ThemeCountID).text() * columns
+            },
+            dataType: 'json',
+            beforeSend: function () {
+                ClearThemeButtons();
+                var btn = $('#' + buttonID);
+                btn.addClass('btn-warning');
+            },
+            success: function (data) {
+                $('#' + buttonID).addClass('btn-success');
+                DisplayThemes(data, columns);
+            },
+            error: function () {
+                $('#' + buttonID).addClass('btn-danger');
+            }
+        });
+    };
+
+    function DisplayThemes(dataList, columns) {
+        var container = $('#' + ThemeDataID);
+        container.empty();
+
+        var listSize = dataList.length;
+        var currentRow = null;
+        for (var i = 0 ; i < listSize ; i++) {
+            //  create new row
+            if (i % columns == 0) {
+                //  end previous row
+                if (i > 0) {
+                    container.append(currentRow);
+                }
+                currentRow = $('<div></div>');
+                currentRow.addClass('row');
+                currentRow.attr('style', 'border-bottom: 1px solid #d0d0d0');
+            }
+
+            //  add the element to the current row
+            currentRow.append(GetThemeDiv(dataList[i].Name));
+        }
+        container.append(currentRow);
+    }
+
+    function GetThemeDiv(Theme) {
+        var itemDiv = $("<div></div>");
+        itemDiv.addClass(ThemeClass);
+        itemDiv.addClass("col-sm-6");
+        itemDiv.text(Theme);
+        return itemDiv;
+    }
+
+    function ClearThemeButtons() {
+
+        var buttonIDs = ['GenTheme'];
+
+        buttonIDs.forEach(function (ID) {
+            var btn = $('#' + ID);
+            btn.removeClass('btn-warning');
+            btn.removeClass('btn-success');
+            btn.removeClass('btn-danger');
+        });
+    }
+
+    function CycleThemeCount() {
+        var curCount = $('#' + ThemeCountID).text();
+        var index = ThemeCycleChoices.indexOf(parseInt(curCount));
+
+        index++;
+        if (index == ThemeCycleChoices.length) index = 0;
+        $('#' + ThemeCountID).text(ThemeCycleChoices[index]);
+    }
+</script>

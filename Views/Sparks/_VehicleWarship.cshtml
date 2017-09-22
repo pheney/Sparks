@@ -1,0 +1,84 @@
+﻿<div class="row">
+    <div class="col-sm-12"><h3>Warships <small>Battlships, heavy cruisers, frigates</small></h3></div>
+</div>
+<div id="WarshipData" class="row">
+    <div class="col-sm-12 data-area" data-url="VehicleWarship" data-size="4">
+    </div>
+    <div class="template hide">
+        <strong class="vehicle-name"></strong>
+        <div class="hide vehicle-movement">
+            <strong>Movement:</strong> <span class="data"></span>
+        </div>
+        <div class="hide vehicle-characteristic">
+            <strong>Characteristic:</strong> <span class="data"></span>
+        </div>
+        <div class="hide vehicle-material">
+            <strong>Material:</strong> <span class="data"></span>
+        </div>
+        <div class="hide vehicle-offenses">
+            <strong>Primary Offenses:</strong> <span class="data"></span>
+        </div>
+        <div class="hide vehicle-defenses">
+            <strong>Primary Defenses:</strong> <span class="data"></span>
+        </div>
+        <div class="hide vehicle-armor">
+            <strong>Armor:</strong> <span class="data"></span>
+        </div>
+        <div class="hide vehicle-power">
+            <strong>Power source:</strong> <span class="data"></span>
+        </div>
+        <div class="hide vehicle-range">
+            <strong>Maximum range:</strong> <span class="data"></span>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var element = $('#WarshipData .data-area');
+        element.data('display', WarshipDisplay);
+        element.data('parameters', WarshipParameters);
+        element.data('forceWaitModal', true);
+        element.data('default-count', 3);
+    });
+
+    //  Takes a VmGeneral object in JSON format as
+    //  its parameter. This object contains Vehicle
+    //  information. Returns the object as HTML.
+    function WarshipDisplay(item) {
+        var result = $('#WarshipData').children('.template').clone();
+        var vehicleName = "";
+        if (item.Condition) vehicleName += item.Condition.Name + ' ';
+        vehicleName += item.BaseVehicle.Name;
+        result.find('.vehicle-name').html(ProperCase(vehicleName));
+        if (item.Movement) SetChildDataElement(result, '.vehicle-movement', item.Movement.Name);
+        if (item.Characteristic) SetChildDataElement(result, '.vehicle-characteristic', item.Characteristic.Name);
+        if (item.Material) SetChildDataElement(result, '.vehicle-material', item.Material.Name);
+        if (item.Offenses) {
+            var weaponSystem = ProperCase(item.Offenses.Name);
+            if (item.Offenses.Description) {
+                var weaponry = $('<ol></ol>');
+                var items = item.Offenses.Description.split(', ');
+                for (var i = 0; i < items.length; i++) {
+                    var li = $('<li></li>');
+                    li.html(items[i]);
+                    weaponry.append(li);
+                }
+                weaponSystem += weaponry.prop('outerHTML');
+            }
+            SetChildDataElement(result, '.vehicle-offenses', weaponSystem);
+        }
+        if (item.Defenses) SetChildDataElement(result, '.vehicle-defenses', item.Defenses.Name);
+        if (item.Armor) SetChildDataElement(result, '.vehicle-armor', item.Armor.Name);
+        if (item.Power) SetChildDataElement(result, '.vehicle-power', item.Power.Name);
+        result.removeClass('hide');
+        result.removeClass('template');
+        return result;
+    }
+
+    function WarshipParameters() {
+        return {
+            count: GetCount(),
+            attrCount: 2
+        };
+    }
+</script>

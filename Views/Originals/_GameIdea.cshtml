@@ -1,0 +1,113 @@
+﻿<div class="row">
+    <div class="col-sm-10"><h3>Game Ideas <small>Theme, Setting, Gameplay</small></h3></div>
+    <div class="col-sm-1">
+        <div id="GameIdeaCount" class="btn btn-primary btn-block">3</div>
+    </div>
+    <div class="col-sm-1">
+        <div id="GenGameIdea" class="btn btn-primary btn-block">Gen</div>
+    </div>
+</div>
+<div class="row">
+    <div id="GameIdeaData" class="col-sm-12">
+    </div>
+</div>
+<script type="text/javascript">
+
+    var GameIdeaClass = 'GameIdea';
+    var GameIdeaDataID = GameIdeaClass + 'Data';
+    var GameIdeaCountID = GameIdeaClass + 'Count';
+    var GameIdeaCycleChoices = [3, 5, 9, 20];
+
+    $(document).ready(function () {
+
+        $('#Gen' + GameIdeaClass).on('click', function () {
+            GetGameIdeas(3);
+        });
+        $('#' + GameIdeaCountID).on('click', function () {
+            CycleGameIdeaCount();
+        })
+
+        $('#Gen' + GameIdeaClass).click();
+    });
+    
+    function GetGameIdeas(columns) {
+        var buttonID = 'Gen' + GameIdeaClass;
+        $.ajax({
+            method: 'get',
+            url: '@Url.Action("_Z_")'.replace('_Z_', GameIdeaClass),
+            data: {
+                count: $('#' + GameIdeaCountID).text() * columns
+            },
+            dataType: 'json',
+            beforeSend: function () {
+                ClearGameIdeaButtons();
+                var btn = $('#' + buttonID);
+                btn.addClass('btn-warning');
+            },
+            success: function (data) {
+                $('#' + buttonID).addClass('btn-success');
+                DisplayGameIdeas(data, columns);
+            },
+            error: function () {
+                $('#' + buttonID).addClass('btn-danger');
+            }
+        });
+    };
+
+    function ClearGameIdeaButtons() {
+
+        var buttonIDs = ['Gen' + GameIdeaClass];
+
+        buttonIDs.forEach(function (ID) {
+            var btn = $('#' + ID);
+            btn.removeClass('btn-warning');
+            btn.removeClass('btn-success');
+            btn.removeClass('btn-danger');
+        });
+    }
+
+    function DisplayGameIdeas(dataList, columns) {
+        var container = $('#' + GameIdeaDataID);
+        container.empty();
+
+        var listSize = dataList.length;
+        var currentRow = null;
+        for (var i = 0 ; i < listSize ; i++) {
+            //  create new row
+            if (i % columns == 0) {
+                //  end previous row
+                if (i > 0) {
+                    container.append(currentRow);
+                }
+                currentRow = $('<div></div>');
+                currentRow.addClass('row');
+                currentRow.attr('style', 'border-bottom: 1px solid #d0d0d0');
+            }
+
+            //  add the element to the current row
+            currentRow.append(GetGameIdeaDiv(dataList[i]));
+        }
+        container.append(currentRow);
+    }
+
+    function GetGameIdeaDiv(w) {
+        var itemDiv = $("<div></div>");
+        var span = $('<span></span>');
+        span.text(w.Description);
+
+        itemDiv.append(span);
+        itemDiv.addClass(GameIdeaClass);
+        itemDiv.addClass("col-sm-4");
+
+        return itemDiv;
+    }
+
+    function CycleGameIdeaCount() {
+        var curCount = $('#' + GameIdeaCountID).text();
+        var index = GameIdeaCycleChoices.indexOf(parseInt(curCount));
+
+        index++;
+        if (index == GameIdeaCycleChoices.length) index = 0;
+        $('#' + GameIdeaCountID).text(GameIdeaCycleChoices[index]);
+    }
+</script>

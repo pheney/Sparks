@@ -1,0 +1,107 @@
+﻿<div class="row">
+    <div class="col-sm-10"><h3>Weapons</h3></div>
+    <div class="col-sm-1">
+        <div id="WeaponCount" class="btn btn-primary btn-block">3</div>
+    </div>
+    <div class="col-sm-1">
+        <div id="GenWeapon" class="btn btn-primary btn-block">Gen</div>
+    </div>
+</div>
+<div class="row">
+    <div id="WeaponData" class="col-sm-12">
+    </div>
+</div>
+<script type="text/javascript">
+
+    var WeaponClass = 'Weapon';
+    var WeaponDataID = WeaponClass + 'Data';
+    var WeaponCountID = WeaponClass + 'Count';
+    var WeaponCycleChoices = [3, 5, 9, 20];
+
+    $(document).ready(function () {
+
+        $('#Gen' + WeaponClass).on('click', function () {
+            GetWeapons(4, 'Gen' + WeaponClass);
+        });
+        $('#' + WeaponCountID).on('click', function () {
+            CycleWeaponCount();
+        });
+
+        $('#Gen' + WeaponClass).click();
+    });
+
+    function GetWeapons(columns, buttonID) {
+        $.ajax({
+            method: 'get',
+            url: '@Url.Action("_Z_")'.replace('_Z_', WeaponClass),
+            data: {
+                count: $('#' + WeaponCountID).text() * columns
+            },
+            dataType: 'json',
+            beforeSend: function () {
+                ClearWeaponButtons();
+                var btn = $('#' + buttonID);
+                btn.addClass('btn-warning');
+            },
+            success: function (data) {
+                $('#' + buttonID).addClass('btn-success');
+                DisplayWeapons(data, columns);
+            },
+            error: function () {
+                $('#' + buttonID).addClass('btn-danger');
+            }
+        });
+    };
+
+    function DisplayWeapons(dataList, columns) {
+        var container = $('#' + WeaponDataID);
+        container.empty();
+
+        var listSize = dataList.length;
+        var currentRow = null;
+        for (var i = 0 ; i < listSize ; i++) {
+            //  create new row
+            if (i % columns == 0) {
+                //  end previous row
+                if (i > 0) {
+                    container.append(currentRow);
+                }
+                currentRow = $('<div></div>');
+                currentRow.addClass('row');
+            }
+
+            //  add the element to the current row
+            currentRow.append(GetWeaponDiv(dataList[i].Name));
+        }
+        container.append(currentRow);
+    }
+
+    function GetWeaponDiv(Weapon) {
+        var itemDiv = $("<div></div>");
+        itemDiv.addClass(WeaponClass);
+        itemDiv.addClass("col-sm-3");
+        itemDiv.text(Weapon);
+        return itemDiv;
+    }
+
+    function ClearWeaponButtons() {
+
+        var buttonIDs = ['GenWeapon'];
+
+        buttonIDs.forEach(function (ID) {
+            var btn = $('#' + ID);
+            btn.removeClass('btn-warning');
+            btn.removeClass('btn-success');
+            btn.removeClass('btn-danger');
+        });
+    }
+
+    function CycleWeaponCount() {
+        var curCount = $('#' + WeaponCountID).text();
+        var index = WeaponCycleChoices.indexOf(parseInt(curCount));
+
+        index++;
+        if (index == WeaponCycleChoices.length) index = 0;
+        $('#' + WeaponCountID).text(WeaponCycleChoices[index]);
+    }
+</script>

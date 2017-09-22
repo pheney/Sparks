@@ -1,0 +1,109 @@
+﻿<div class="row">
+    <div class="col-sm-5"><h3>Titles, Roles &amp; Professions</h3></div>
+    <div class="col-sm-6">
+        <div id="GenTitle" class="btn-hidden" style="display:none" data-quantity="16">Gen</div>
+        @Html.Partial("_SectionControlPanel")
+    </div>
+</div>
+<div class="row">
+    <div id="TitleData" class="col-sm-12">
+    </div>
+</div>
+<script type="text/javascript">
+
+    var TitleClass = 'Title';
+    var TitleDataID = TitleClass + 'Data';
+    //var TitleCountID = TitleClass + 'Count';
+    var TitleCycleChoices = [3, 5, 9, 20];
+
+    $(document).ready(function () {
+
+        var generateButton = $('#Gen' + TitleClass);
+
+        generateButton.on('click', function () {
+            var quantity = parseInt($(this).attr('data-quantity'), 10);
+            GetTitles(quantity,'Gen' + TitleClass);
+        });
+        //$('#' + TitleCountID).on('click', function () {
+        //    CycleTitleCount();
+        //});
+
+        generateButton.click();
+    });
+    
+    function GetTitles(quantity, buttonID) {
+        var columns = 4;
+        $.ajax({
+            method: 'get',
+            url: '@Url.Action("_Z_")'.replace('_Z_', TitleClass),
+            data: {
+                count: quantity
+            },
+            dataType: 'json',
+            beforeSend: function () {
+                ClearTitleButtons();
+                var btn = $('#' + buttonID);
+                btn.addClass('btn-warning');
+            },
+            success: function (data) {
+                $('#' + buttonID).addClass('btn-success');
+                DisplayTitles(data, columns);
+            },
+            error: function () {
+                $('#' + buttonID).addClass('btn-danger');
+            }
+        });
+    };
+    
+    function DisplayTitles(dataList, columns) {
+        var container = $('#' + TitleDataID);
+        container.empty();
+
+        var listSize = dataList.length;
+        var currentRow = null;
+        for (var i = 0 ; i < listSize ; i++) {
+            //  create new row
+            if (i % columns == 0) {
+                //  end previous row
+                if (i > 0) {
+                    container.append(currentRow);
+                }
+                currentRow = $('<div></div>');
+                currentRow.addClass('row');
+            }
+
+            //  add the element to the current row
+            currentRow.append(GetTitleDiv(dataList[i].Name));
+        }
+        container.append(currentRow);
+    }
+
+    function GetTitleDiv(Title) {
+        var itemDiv = $("<div></div>");
+        itemDiv.addClass(TitleClass);
+        itemDiv.addClass("col-sm-3");
+        itemDiv.text(Title);
+        return itemDiv;
+    }
+
+    function ClearTitleButtons() {
+
+        var buttonIDs = ['GenTitle'];
+
+        buttonIDs.forEach(function (ID) {
+            var btn = $('#' + ID);
+            btn.removeClass('btn-warning');
+            btn.removeClass('btn-success');
+            btn.removeClass('btn-danger');
+        });
+    }
+
+    function CycleTitleCount() {
+        var curCount = $('#' + TitleCountID).text();
+        var index = TitleCycleChoices.indexOf(parseInt(curCount));
+
+        index++;
+        if (index == TitleCycleChoices.length) index = 0;
+        $('#' + TitleCountID).text(TitleCycleChoices[index]);
+    }
+</script>

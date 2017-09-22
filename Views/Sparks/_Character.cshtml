@@ -1,0 +1,63 @@
+﻿<div class="row">
+    <div class="col-sm-12"><h3>Characters <small>Concepts</small></h3></div>
+</div>
+<div id="CharacterData" class="row">
+    <div class="col-sm-12 data-area" data-url="Character" data-size="3">
+    </div>
+    <div class="template hide">
+        <h4 class="item-name"></h4>
+        <p>
+            <strong class="title-description"></strong><br />
+            <em class="actor-description"></em>
+        </p>
+        <p>
+            <u>Description</u><br />
+            <span class="game-effect"></span>
+        </p>
+        <p>
+            <u>Origins</u><br />
+            <span class="world-description"></span>
+        </p>
+        <p>
+            <u>Citizenship</u><br />
+            <span class="society-description"></span>
+        </p>
+        <p>
+            <u>Unique Posession</u><br />
+            <span class="weapon-name"></span>
+        </p>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var element = $('#CharacterData .data-area');
+        element.data('display', DisplayCharacter);
+        element.data('forceWaitModal', true);
+        element.data('default-count', 4);
+    });
+
+    //  Takes a VmWeapon object in JSON format as
+    //  its parameter. This object contains character
+    //  information. Returns the object as HTML.
+    function DisplayCharacter(item) {
+        var result = $('#CharacterData .template').clone();
+
+        result.find('.item-name').html(item.Name);
+        result.find('.title-description').html(CustomCase(item.Title.Description));
+        result.find('.actor-description').html(item.Actor.Description);
+
+        var gameEffect = item.Actor.GameEffect;
+        var commas = gameEffect.split(',');
+        var wrongNameLength = commas[0].length + commas[1].length + 2;
+        gameEffect = gameEffect.substring(wrongNameLength);
+        result.find('.game-effect').html(item.Name + ' ' + gameEffect);
+
+        result.find('.world-description').html(CustomCase(item.World.Description));
+        result.find('.society-description').html(item.Society.Description);
+        result.find('.weapon-name').html(CustomCase(item.Name + ' ' + item.Weapon.Carries + ' ' + item.Weapon.Name));
+
+        result.removeClass('hide');
+        result.removeClass('template');
+        return result;
+    }
+</script>

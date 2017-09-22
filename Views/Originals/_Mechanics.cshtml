@@ -1,0 +1,118 @@
+﻿<div class="row">
+    <div class="col-sm-10"><h3>Game Mechanics <small>Design Challenge</small></h3></div>
+    <div class="col-sm-1">
+        <div id="MechanicsCount" class="btn btn-primary btn-block">3</div>
+    </div>
+    <div class="col-sm-1">
+        <div id="GenMechanics" class="btn btn-primary btn-block">Gen</div>
+    </div>
+</div>
+<div class="row">
+    <div id="MechanicsData" class="col-sm-12">
+    </div>
+</div>
+<script type="text/javascript">
+
+    var MechanicsClass = 'Mechanics';
+    var MechanicsDataID = MechanicsClass + 'Data';
+    var MechanicsCountID = MechanicsClass + 'Count';
+    var MechanicsCycleChoices = [3, 5, 9, 20];
+
+    $(document).ready(function () {
+
+        $('#Gen' + MechanicsClass).on('click', function () {
+            GetMechanicss(1, 'Gen' + MechanicsClass);
+        });
+        $('#' + MechanicsCountID).on('click', function () {
+            CycleMechanicsCount();
+        });
+
+        $('#Gen' + MechanicsClass).click();
+    });
+
+    function GetMechanicss(columns, buttonID) {
+        $.ajax({
+            method: 'get',
+            url: '@Url.Action("_Z_")'.replace('_Z_', MechanicsClass),
+            data: {
+                count: $('#' + MechanicsCountID).text() * columns
+            },
+            dataType: 'json',
+            beforeSend: function () {
+                ClearMechanicsButtons();
+                var btn = $('#' + buttonID);
+                btn.addClass('btn-warning');
+            },
+            success: function (data) {
+                $('#' + buttonID).addClass('btn-success');
+                DisplayMechanicss(data, columns);
+            },
+            error: function () {
+                $('#' + buttonID).addClass('btn-danger');
+            }
+        });
+    };
+
+    function DisplayMechanicss(dataList, columns) {
+        var container = $('#' + MechanicsDataID);
+        container.empty();
+
+        var listSize = dataList.length;
+        var currentRow = null;
+        for (var i = 0 ; i < listSize ; i++) {
+            //  create new row
+            if (i % columns == 0) {
+                //  end previous row
+                if (i > 0) {
+                    container.append(currentRow);
+                }
+                currentRow = $('<div></div>');
+                currentRow.addClass('row');
+                currentRow.attr('style', 'border-bottom: 1px solid #d0d0d0');
+            }
+
+            //  add the element to the current row
+            var div = GetMechanicsDiv(dataList[i].Easy);
+            div.addClass('text-success');
+            currentRow.append(div);
+
+            div = GetMechanicsDiv(dataList[i].Inspiration);
+            div.addClass('text-warning');
+            currentRow.append(div);
+
+            div = GetMechanicsDiv(dataList[i].Description);
+            div.addClass('text-danger');
+            currentRow.append(div);
+        }
+        container.append(currentRow);
+    }
+
+    function GetMechanicsDiv(Mechanics) {
+        var itemDiv = $("<div></div>");
+        itemDiv.addClass(MechanicsClass);
+        itemDiv.addClass("col-sm-4");
+        itemDiv.text(Mechanics);
+        return itemDiv;
+    }
+
+    function ClearMechanicsButtons() {
+
+        var buttonIDs = ['GenMechanics'];
+
+        buttonIDs.forEach(function (ID) {
+            var btn = $('#' + ID);
+            btn.removeClass('btn-warning');
+            btn.removeClass('btn-success');
+            btn.removeClass('btn-danger');
+        });
+    }
+
+    function CycleMechanicsCount() {
+        var curCount = $('#' + MechanicsCountID).text();
+        var index = MechanicsCycleChoices.indexOf(parseInt(curCount));
+
+        index++;
+        if (index == MechanicsCycleChoices.length) index = 0;
+        $('#' + MechanicsCountID).text(MechanicsCycleChoices[index]);
+    }
+</script>

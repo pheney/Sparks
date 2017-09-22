@@ -1,0 +1,101 @@
+﻿<head>
+    <title>Database</title>
+    <!--
+    Styles.Render("~/Content/css")
+    Scripts.Render("~/bundles/jquery")
+    Scripts.Render("~/bundles/bootstrap")
+    Scripts.Render("~/bundles/sparksjs")
+    -->
+</head>
+<body>
+    <h2>Sparks <small>Database</small></h2>
+    <div>@DateTime.Now</div>
+    <div class="row display-section">
+        <div class="container well">
+            <div class="col-sm-6">
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                        Table Select
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">dynamic choices</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <input class="btn btn-primary" value="Show Sample" />
+            </div>
+        </div>
+        <div class="container well">
+            <h3 id="table-title">Table title goes here</h3>
+            <p id="table-description">This table contains some type of information. Here is some sample data from this table.</p>
+            <p id="table-data">
+                sample data from table
+            </p>
+        </div>
+    </div>
+    <div class="row input-section">
+        <input type="text" id="newTableEntryID"/>
+        <input class="btn btn-primary" value="Submit" id="submitNewEntryID"/>
+    </div>
+    <div class="row">
+        <a class="btn btn-primary btn-xs" href='@Url.Action("Index","Sparks")'>Sparks</a> Return to the Inspiration Engine
+    </div>
+</body>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        //  load table selction information
+        UpdateDropdownData();
+
+        //  interface listeners
+        $('#tableSelectID .dropdown-menu li a').on('click', OnSelectedTableChanged);
+        $('#submitNewEntryID').on('click', OnAddTableData);
+    });
+
+    //  add the model data to the table-selection dropdown
+    function UpdateDropdownData() {
+        var dropdown = $('.dropdown-menu');
+        dropdown.empty();
+        var choices = @Html.Raw(Json.Encode(Model));
+        choices.forEach(function(choice){
+            var html = $('<li></li>');
+            var a = $('<a></a>');
+            a.attr('href','#');
+            a.attr('data-tableId', choice.ID);
+            a.text(choice.Name);
+            dropdown.append(html.append(a));
+        });
+    }
+
+    //  When the table-selection dropdown is changed,
+    //  Clear the current data display and show the contents
+    //  of the selected table.
+    function OnSelectedTableChanged() {
+        var dataArea = $('#table-data');
+        dataArea.empty();
+        
+        var dropdown = $('#tableSelectID');
+        var tableId = dropdown.val();
+
+        alert('table id: ' + tableId);
+        return;
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("GetTableById", "Database")',
+            dataType: 'json',
+            beforeSend: null,
+            success: function(data, status, jqXHR){},
+            error: function(jqXHR, status, error){},
+            complete: null
+        });
+    }
+
+    function OnAddTableData() {
+        var newEntry = $('#newTableEntryID').val();
+        if (IsNullOrWhiteSpace(newEntry)) return;
+
+        alert('submit: ' + newEntry);
+    }
+</script>
